@@ -35,25 +35,174 @@ Before you begin, ensure you have the following installed:
 ## Quick Setup
 
 ### 1. Clone the Repository
+```bash
+# Terminal 1 - Start API server
+cd server
+npm run dev
+
+# Terminal 2 - Start web client
+cd web
+npm run dev
+
+# Terminal 3 - Start image classifier
+cd ml-services/image-classifier
+.venv\Scripts\python.exe -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+# Terminal 4 - Start recommendation engine
+cd ml-services/recommendation-engine
+.venv\Scripts\python.exe src/main.py
+
+# Terminal 5 - Start mobile client (optional)
+cd mobile
+npx expo start --tunnel
+```
+
+## Access the Application
+
+Once running, you can access:
+
+- **Web Application**: http://localhost:3000
+- **API Server**: http://localhost:5000
+- **API Documentation**: http://localhost:5000/api-docs
+- **Admin Dashboard**: http://localhost:3000/admin/dashboard
+- **Mobile App**: Scan QR code from Expo terminal or use Expo Go app with URL: `exp://<your-ip>:19000`
+
+## Stopping Services
+
+### Using VS Code Tasks
+
+1. Press `Ctrl + Shift + P`
+2. Search for: `Tasks: Run Task`
+3. Select: `Stop Full Stack (Local)`
+
+### Manual Stop
+
+Use `Ctrl + C` in each terminal, or use the provided stop tasks:
+- `Stop Web & Server Only`
+- `Stop Full Stack (Local)`
+
+---
+
+## � Installing Dependencies
+
+### Web, Server & Mobile Setup
+
+Before starting the main applications, you need to install their Node.js dependencies.
+
+#### 1. Server Setup
 
 ```bash
-git clone <repository-url>
-cd algoherbarium
+# Navigate to the server directory
+cd server
+
+# Install dependencies
+npm install
+
+# Or if you prefer yarn
+yarn install
+```
+
+#### 2. Web Client Setup
+
+```bash
+# Navigate to the web directory
+cd web
+
+# Install dependencies
+npm install
+
+# Or if you prefer yarn
+yarn install
+```
+
+#### 3. Mobile App Setup
+
+```bash
+# Navigate to the mobile directory
+cd mobile
+
+# Install dependencies
+npm install
+
+# Or if you prefer yarn
+yarn install
+
+# Install Expo CLI globally (if not already installed)
+npm install -g @expo/cli
+```
+
+#### 4. Verify Installation
+
+After installation, you can verify the setup by running:
+
+```bash
+# Test server (in server directory)
+npm run --version
+
+# Test web client (in web directory)  
+npm run --version
+
+# Test mobile app (in mobile directory)
+npx expo --version
+```
+
+### ML Services Setup
+
+Before starting the ML services, you need to install their Python dependencies and set up virtual environments.
+
+#### 1. Image Classifier Setup
+
+```bash
+# Navigate to the image classifier directory
+cd ml-services/image-classifier
+
+# Create virtual environment (if not exists)
+python -m venv .venv
+
+# Activate virtual environment
+# On Windows:
+.venv\Scripts\activate
+# On macOS/Linux:
+source .venv/bin/activate
+
+# Install requirements
+pip install -r requirements.txt
+```
+
+#### 2. Recommendation Engine Setup
+
+```bash
+# Navigate to the recommendation engine directory
+cd ml-services/recommendation-engine
+
+# Create virtual environment (if not exists)
+python -m venv .venv
+
+# Activate virtual environment
+# On Windows:
+.venv\Scripts\activate
+# On macOS/Linux:
+source .venv/bin/activate
+
+# Install requirements
+pip install -r requirements.txt
+```
+
+#### 3. Verify ML Services Installation
+
+After installation, you can verify the services are properly set up by running:
+
+```bash
+# Test image classifier (in ml-services/image-classifier directory)
+.venv\Scripts\python.exe -c "import fastapi, uvicorn, torch, torchvision; print('Image classifier dependencies installed successfully')"
+
+# Test recommendation engine (in ml-services/recommendation-engine directory)  
+.venv\Scripts\python.exe -c "import fastapi, uvicorn, sklearn; print('Recommendation engine dependencies installed successfully')"
 ```
 
 ---
 
-## 🚀 Quick Start (If you have all dependencies)
-
-**If you already have Node.js, Python, and all prerequisites installed**, you can start the application immediately:
-
-1. **Configure your environment files** (see Environment Setup section below)
-2. **Skip to "Starting the Application" section**
-3. **Run your preferred startup option**
-
----
-
-## Environment Setup
+## ⚙️ Environment Setup
 
 Create environment files in the required directories:
 
@@ -132,80 +281,6 @@ ALLOW_EXTERNAL_INTERNAL_CALLS=true
 ```
 
 ---
-
-## Starting the Application
-
-### Option 1: Using VS Code Tasks (Recommended)
-
-1. Open the project in VS Code
-2. Press `Ctrl + Shift + P`
-3. Search for: `Tasks: Run Task`
-4. Select: `Start Full Stack (Local)`
-
-This will start all services simultaneously:
-- Web server (port 3000)
-- API server (port 5000)
-- Image classifier (port 8000)
-- Recommendation engine (port 8001)
-
-### Option 2: Manual Startup
-
-Open separate terminals for each service:
-
-```bash
-# Terminal 1 - Start API server
-cd server
-npm run dev
-
-# Terminal 2 - Start web client
-cd web
-npm run dev
-
-# Terminal 3 - Start image classifier
-cd ml-services/image-classifier
-.venv\Scripts\python.exe -m uvicorn app.main:app --host 0.0.0.0 --port 8000
-
-# Terminal 4 - Start recommendation engine
-cd ml-services/recommendation-engine
-.venv\Scripts\python.exe src/main.py
-
-# Terminal 5 - Start mobile client (optional)
-cd mobile
-npx expo start --tunnel
-```
-
-### Option 3: Start Web & Server Only
-
-If you don't need ML services:
-
-```bash
-# VS Code Task: "Start Web & Server Only"
-# Or manually start just the web and server terminals
-```
-
-## Access the Application
-
-Once running, you can access:
-
-- **Web Application**: http://localhost:3000
-- **API Server**: http://localhost:5000
-- **API Documentation**: http://localhost:5000/api-docs
-- **Admin Dashboard**: http://localhost:3000/admin/dashboard
-- **Mobile App**: Scan QR code from Expo terminal or use Expo Go app with URL: `exp://<your-ip>:19000`
-
-## Stopping Services
-
-### Using VS Code Tasks
-
-1. Press `Ctrl + Shift + P`
-2. Search for: `Tasks: Run Task`
-3. Select: `Stop Full Stack (Local)`
-
-### Manual Stop
-
-Use `Ctrl + C` in each terminal, or use the provided stop tasks:
-- `Stop Web & Server Only`
-- `Stop Full Stack (Local)`
 
 ## Troubleshooting
 
