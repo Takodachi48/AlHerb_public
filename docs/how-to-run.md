@@ -1,12 +1,24 @@
 # How to Run AlgoHerbarium
 
-This guide will help you set up and run the AlgoHerbarium application locally for development.
+This guide will help you set up and run the AlgoHerbarium application locally.
+
+## ⚠️ Known Issues
+
+**Analytics Exports**: The export functionality for analytics data (CSV/PDF) is currently not working properly.
+
+**ML Retraining**: Model retraining features for both image classifier and recommendation engine are not functional.
+
+**ML Recommendations**: Actual machine learning recommendations are not implemented. The system currently uses heuristic-based recommendations through database matching.
+
+**Real-time Analytics**: Real-time data updates in the operations tab are not working in the deployed application, though they function properly in local development.
+
+**Cloudflare Protection**: The Cloudflare protection feature is not properly implemented for mobile applications. When enabled by admins, users cannot log in through the mobile app.
 
 ## � Recommended Approach
 
 **It's highly recommended to open this project in VS Code** to use the built-in tasks that can start all services with one command. This is the easiest way to get everything running simultaneously.
 
-## � Important Note for Deployed Services
+## Important Note for Deployed Services
 
 When using the **deployed web app** (algoherbarium.vercel.app), the cloud services may enter a "cold start" state due to inactivity. To ensure full functionality:
 

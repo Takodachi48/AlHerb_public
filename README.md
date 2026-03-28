@@ -14,6 +14,18 @@ Philippine Herbal medicine system
 - **Blog System**: Educational content about herbal medicine
 - **Admin Dashboard**: Manage and moniter the system
 
+## ⚠️ Known Issues
+
+**Analytics Exports**: The export functionality for analytics data (CSV/PDF) is currently not working properly.
+
+**ML Retraining**: Model retraining features for both image classifier and recommendation engine are not functional.
+
+**ML Recommendations**: Actual machine learning recommendations are not implemented. The system currently uses heuristic-based recommendations through database matching.
+
+**Real-time Analytics**: Real-time data updates in the operations tab are not working in the deployed application, though they function properly in local development.
+
+**Cloudflare Protection**: The Cloudflare protection feature is not properly implemented for mobile applications. When enabled by admins, users cannot log in through the mobile app.
+
 ## Quick Start
 
 ### Prerequisites
