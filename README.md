@@ -32,17 +32,56 @@ Philippine Herbal medicine system
    ```
 
 2. **Install dependencies**
+   
+   **Web, Server & Mobile Setup:**
    ```bash
-   # Install root dependencies
+   # Install server dependencies
+   cd server
    npm install
    
    # Install web dependencies
-   cd web
+   cd ../web
    npm install
    
-   # Install server dependencies
-   cd ../server
+   # Install mobile dependencies
+   cd ../mobile
    npm install
+   
+   # Install Expo CLI globally (if not already installed)
+   npm install -g @expo/cli
+   ```
+   
+   **ML Services Setup:**
+   ```bash
+   # Image Classifier Setup
+   cd ml-services/image-classifier
+   
+   # Create virtual environment (if not exists)
+   python -m venv .venv
+   
+   # Activate virtual environment
+   # On Windows:
+   .venv\Scripts\activate
+   # On macOS/Linux:
+   source .venv/bin/activate
+   
+   # Install requirements
+   pip install -r requirements.txt
+   
+   # Recommendation Engine Setup
+   cd ../recommendation-engine
+   
+   # Create virtual environment (if not exists)
+   python -m venv .venv
+   
+   # Activate virtual environment
+   # On Windows:
+   .venv\Scripts\activate
+   # On macOS/Linux:
+   source .venv/bin/activate
+   
+   # Install requirements
+   pip install -r requirements.txt
    ```
 
 3. **Environment Setup**
@@ -58,16 +97,23 @@ Philippine Herbal medicine system
    **Mobile Environment** (`mobile/.env`)
    See: mobile/.env.example
 
-4. **Start the Application**
+4. **Start Application**
    
-   **Option 1 - Using VScode tasks**
-   Press ctrl + shift + p
-   Search for: Tasks: Run Task
-   Select: Start Full Stack (local)
+   **Option 1 - Using VS Code Tasks (Recommended)**
+   Press `Ctrl + Shift + P`
+   Search for: `Tasks: Run Task`
+   Select: `Start Full Stack (Local)`
 
-   **Option 2 - Manually start each**
+   This will start all services simultaneously:
+   - Web server (port 3000)
+   - API server (port 5000)
+   - Image classifier (port 8000)
+   - Recommendation engine (port 8001)
+
+   **Option 2 - Manual Startup**
+   Open separate terminals for each service:
    ```bash
-   # Terminal 1 - Start server
+   # Terminal 1 - Start API server
    cd server
    npm run dev
    
@@ -75,16 +121,45 @@ Philippine Herbal medicine system
    cd web
    npm run dev
    
-   # Terminal 3 - Start mobile client (expo)
+   # Terminal 3 - Start image classifier
+   cd ml-services/image-classifier
+   .venv\Scripts\python.exe -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+   
+   # Terminal 4 - Start recommendation engine
+   cd ml-services/recommendation-engine
+   .venv\Scripts\python.exe src/main.py
+   
+   # Terminal 5 - Start mobile client (optional)
    cd mobile
    npx expo start --tunnel
    ```
 
-6. **Access the Application**
+   **Option 3 - Start Web & Server Only**
+   If you don't need ML services:
+   ```bash
+   # VS Code Task: "Start Web & Server Only"
+   # Or manually start just the web and server terminals
+   ```
+
+5. **Access Application**
    
-   - **Web Application**: http://localhost:5173
+   - **Web Application**: http://localhost:3000
    - **API Server**: http://localhost:5000
-   - **Admin Dashboard**: http://localhost:5173/admin/dashboard
+   - **API Documentation**: http://localhost:5000/api-docs
+   - **Admin Dashboard**: http://localhost:3000/admin/dashboard
+   - **Mobile App**: Scan QR code from Expo terminal or use Expo Go app with URL: `exp://<your-ip>:19000`
+
+6. **Stopping Services**
+   
+   **Using VS Code Tasks:**
+   Press `Ctrl + Shift + P`
+   Search for: `Tasks: Run Task`
+   Select: `Stop Full Stack (Local)`
+   
+   **Manual Stop:**
+   Use `Ctrl + C` in each terminal, or use the provided stop tasks:
+   - `Stop Web & Server Only`
+   - `Stop Full Stack (Local)`
 
 ## 📁 Project Structure
 
