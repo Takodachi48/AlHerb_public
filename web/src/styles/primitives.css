@@ -1,0 +1,253 @@
+/* ============================================================
+   PRIMITIVES.CSS
+   Raw color ramps + per-theme slot aliasing.
+
+   Architecture
+   ────────────
+   Each theme class re-aliases its ramps into generic slot
+   names that semantics.css reads exclusively:
+
+     --brand-{50…950}
+     --neutral-{50…950}
+     --accent-{50…950}
+
+   semantics.css never references a theme name. It only ever
+   reads --brand-400, --neutral-900, etc. This means:
+   • semantics.css stays completely flat and never grows.
+   • Adding a new theme = one new :root.themeN block here only.
+   • elements.css is never touched.
+
+   Surface panels now use the --brand-* ramp at light stops
+   (50–200 in light, 950–800 in dark), giving surfaces a subtle
+   on-brand warmth without a separate ramp.
+
+   Usage
+   ─────
+   <html class="theme1">           light (default)
+   <html class="theme1 dark">      force dark
+   <html class="theme1 auto">      follow OS preference
+
+   ============================================================ */
+
+
+/* ============================================================
+   INTENT RAMPS — universal, theme-independent
+   Consumed directly by semantics.css as --intent-*
+   ============================================================ */
+
+:root {
+  /* SUCCESS */
+  --intent-success-50:  #f6f9f4;
+  --intent-success-100: #e9f3e5;
+  --intent-success-200: #d3e7cb;
+  --intent-success-300: #b0d3a2;
+  --intent-success-400: #82b46e;
+  --intent-success-500: #63994e;
+  --intent-success-600: #4e7d3c;
+  --intent-success-700: #406332;
+  --intent-success-800: #35502b;
+  --intent-success-900: #2c4225;
+  --intent-success-950: #142310;
+
+  /* WARNING */
+  --intent-warning-50:  #fff8eb;
+  --intent-warning-100: #ffecc6;
+  --intent-warning-200: #ffd788;
+  --intent-warning-300: #ffbe50;
+  --intent-warning-400: #ffa220;
+  --intent-warning-500: #f97e07;
+  --intent-warning-600: #dd5902;
+  --intent-warning-700: #b73b06;
+  --intent-warning-800: #942c0c;
+  --intent-warning-900: #7a260d;
+  --intent-warning-950: #461102;
+
+  /* DANGER */
+  --intent-danger-50:  #fdf4f3;
+  --intent-danger-100: #fbe7e5;
+  --intent-danger-200: #f8d3d0;
+  --intent-danger-300: #f2b5af;
+  --intent-danger-400: #e6786e;
+  --intent-danger-500: #dc6257;
+  --intent-danger-600: #c8463a;
+  --intent-danger-700: #a8372d;
+  --intent-danger-800: #8b3129;
+  --intent-danger-900: #742e28;
+  --intent-danger-950: #3e1511;
+
+  /* INFO */
+  --intent-info-50:  #eff5ff;
+  --intent-info-100: #dbe8fe;
+  --intent-info-200: #bfd7fe;
+  --intent-info-300: #93bbfd;
+  --intent-info-400: #609afa;
+  --intent-info-500: #3b82f6;
+  --intent-info-600: #2570eb;
+  --intent-info-700: #1d64d8;
+  --intent-info-800: #1e55af;
+  --intent-info-900: #1e478a;
+  --intent-info-950: #172e54;
+}
+
+
+/* ============================================================
+   THEME 1 — gray-nurse / bud / green-smoke
+   ============================================================ */
+
+:root {
+  /* brand → gray-nurse */
+  --brand-50:  #f9fafa;
+  --brand-100: #f4f5f5;
+  --brand-200: #dde2de;
+  --brand-300: #d0d7d2;
+  --brand-400: #9caaa0;
+  --brand-500: #6a7a6f;
+  --brand-600: #4c5951;
+  --brand-700: #3b453f;
+  --brand-800: #232a23;
+  --brand-900: #161d18;
+  --brand-950: #080d09;
+
+  /* neutral → bud */
+  --neutral-50:  #f9faf9;
+  --neutral-100: #f4f5f4;
+  --neutral-200: #e5e7e4;
+  --neutral-300: #d2d7d0;
+  --neutral-400: #9ea79a;
+  --neutral-500: #6e7a6a;
+  --neutral-600: #4f584d;
+  --neutral-700: #3d453b;
+  --neutral-800: #262a23;
+  --neutral-900: #181d16;
+  --neutral-950: #0a0c09;
+
+  /* accent → green-smoke */
+  --accent-50:  #f5f6ef;
+  --accent-100: #e8ecdb;
+  --accent-200: #d4dbbb;
+  --accent-300: #b7c393;
+  --accent-400: #98a869;
+  --accent-500: #7f9052;
+  --accent-600: #62723e;
+  --accent-700: #4d5833;
+  --accent-800: #3f482c;
+  --accent-900: #373e29;
+  --accent-950: #1c2013;
+}
+
+
+/* ============================================================
+   THEME 2 — shark / oxford-blue / au-chico
+   ============================================================ */
+
+:root.theme2 {
+  /* brand → oxford-blue */
+  --brand-50:  #f9fafb;
+  --brand-100: #f3f4f6;
+  --brand-200: #e6e7ea;
+  --brand-300: #d2d6da;
+  --brand-400: #9ea6ad;
+  --brand-500: #6d757e;
+  --brand-600: #4e5760;
+  --brand-700: #343d46;
+  --brand-800: #222b34;
+  --brand-900: #141b24;
+  --brand-950: #050910;
+
+  /* neutral → shark */
+  --neutral-50:  #fafafa;
+  --neutral-100: #f4f5f5;
+  --neutral-200: #e3e5e8;
+  --neutral-300: #d3d6d9;
+  --neutral-400: #9fa6ac;
+  --neutral-500: #6f767c;
+  --neutral-600: #50575d;
+  --neutral-700: #3d4348;
+  --neutral-800: #26292b;
+  --neutral-900: #1e2124;
+  --neutral-950: #080a0c;
+
+  /* accent → au-chico */
+  --accent-50:  #fbf5f5;
+  --accent-100: #f6efdd;
+  --accent-200: #efdddc;
+  --accent-300: #e1c3c0;
+  --accent-400: #cfa19d;
+  --accent-500: #bb7b78;
+  --accent-600: #a65f5f;
+  --accent-700: #88484a;
+  --accent-800: #733e41;
+  --accent-900: #63383c;
+  --accent-950: #361b1d;
+}
+
+
+/* ============================================================
+   THEME 8 — #000000 · #575068 · #F29A30
+   ============================================================ */
+
+:root.theme8 {
+  /* brand → violet-mist */
+  --brand-50:  #fafafa;
+  --brand-100: #f4f3f6;
+  --brand-200: #e4e2e9;
+  --brand-300: #d4d1db;
+  --brand-400: #a19ab1;
+  --brand-500: #716a81;
+  --brand-600: #575068;
+  --brand-700: #3f3a4b;
+  --brand-800: #27252c;
+  --brand-900: #18161d;
+  --brand-950: #09070d;
+
+  /* neutral → true black */
+  --neutral-50:  #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e6e6e6;
+  --neutral-300: #d6d6d6;
+  --neutral-400: #a5a5a5;
+  --neutral-500: #767676;
+  --neutral-600: #575757;
+  --neutral-700: #434343;
+  --neutral-800: #292929;
+  --neutral-900: #1a1a1a;
+  --neutral-950: #000000;
+
+  /* accent → amber */
+  --accent-50:  #fef7ec;
+  --accent-100: #fce9c9;
+  --accent-200: #f8d18f;
+  --accent-300: #f5b354;
+  --accent-400: #f29a30;
+  --accent-500: #eb7615;
+  --accent-600: #d0540f;
+  --accent-700: #ad3910;
+  --accent-800: #8c2c14;
+  --accent-900: #742513;
+  --accent-950: #421106;
+}
+
+
+/* ============================================================
+   HOW TO ADD A NEW THEME
+   ─────────────────────
+   Copy this skeleton, fill in hex values, done.
+   semantics.css is never touched.
+
+   :root.theme4 {
+     --brand-50:  #...;  --brand-100: #...;  --brand-200: #...;
+     --brand-300: #...;  --brand-400: #...;  --brand-500: #...;
+     --brand-600: #...;  --brand-700: #...;  --brand-800: #...;
+     --brand-900: #...;  --brand-950: #...;
+
+     --neutral-50:  #...; --neutral-100: #...; --neutral-200: #...;
+     --neutral-300: #...; --neutral-400: #...; --neutral-500: #...;
+     --neutral-600: #...; --neutral-700: #...; --neutral-800: #...;
+     --neutral-900: #...; --neutral-950: #...;
+
+     --accent-50:  #...; --accent-100: #...; --accent-200: #...;
+     --accent-300: #...; --accent-400: #...; --accent-500: #...;
+     --accent-600: #...; --accent-700: #...; --accent-800: #...;
+     --accent-900: #...; --accent-950: #...;
+   }
+   ============================================================ */

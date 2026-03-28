@@ -1,0 +1,105 @@
+{
+  "expo": {
+    "name": "AlgoHerbarium",
+    "slug": "algoherbarium",
+    "version": "1.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "herbalmedicine",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.algoherbarium_1.app",
+      "googleServicesFile": "./google-services.json",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/logo.jpg"
+    },
+    "plugins": [
+      [
+        "expo-router",
+        {
+          "origin": false
+        }
+      ],
+      "expo-web-browser",
+      "@react-native-google-signin/google-signin",
+      "expo-font",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera for plant identification."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location to find nearby herbal sources."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": false
+          }
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#10B981",
+          "defaultChannel": "default"
+        }
+      ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "firebase": {
+        "apiKey": "AIzaSyCdMxYzhKyV1clSUV8q1oyk7ESaJoMMed8",
+        "authDomain": "algoherbarium-f9a23.firebaseapp.com",
+        "projectId": "algoherbarium-f9a23",
+        "storageBucket": "algoherbarium-f9a23.firebasestorage.app",
+        "messagingSenderId": "817979772109",
+        "appId": "1:817979772109:android:9a3257e561a7a58c8aad84"
+      },
+      "env": {
+        "EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID": "817979772109-84n100tdhmmbmvcvr5oe31ee6d0rpfmq.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_EXPO_CLIENT_ID": "817979772109-efbv2ardtgq32in9j6ci3smjluje57tn.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID": "",
+        "EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID": "817979772109-efbv2ardtgq32in9j6ci3smjluje57tn.apps.googleusercontent.com",
+        "EXPO_PUBLIC_API_BASE_URL": " https://tomasa-noncasuistical-participantly.ngrok-free.dev/api",
+        "EXPO_PUBLIC_API_FALLBACK_URLS": "",
+        "EXPO_PUBLIC_DEBUG_LOGS": "false",
+        "EXPO_PUBLIC_LATEST_APP_VERSION": "",
+        "EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME": "dubhcjmti",
+        "EXPO_PUBLIC_CLOUDINARY_UPLOAD_PRESET": "blog_uploads",
+        "EXPO_PUBLIC_TURNSTILE_SITE_KEY": "1x00000000000000000000AA"
+      },
+      "eas": {
+        "projectId": "ff38487b-4093-4879-81ab-9b1db1859061"
+      }
+    },
+    "owner": "tako88"
+  }
+}

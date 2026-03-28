@@ -1,0 +1,201 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Web: Start",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev"],
+      "options": {
+        "cwd": "${workspaceFolder}/web"
+      },
+      "presentation": {
+        "panel": "new",
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Server: Start",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev"],
+      "options": {
+        "cwd": "${workspaceFolder}/server"
+      },
+      "presentation": {
+        "panel": "new",
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "ML: Start Image Classifier",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "$env:PYTHONPATH='src'; .\\.venv\\Scripts\\python.exe -m uvicorn app.main:app --host 0.0.0.0 --port 8000"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/ml-services/image-classifier"
+      },
+      "presentation": {
+        "panel": "new",
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "ML: Start Recommendation Engine",
+      "type": "shell",
+      "command": ".\\.venv\\Scripts\\python.exe",
+      "args": ["src/main.py"],
+      "options": {
+        "cwd": "${workspaceFolder}/ml-services/recommendation-engine"
+      },
+      "presentation": {
+        "panel": "new",
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "ML: Start All",
+      "dependsOn": [
+        "ML: Start Image Classifier",
+        "ML: Start Recommendation Engine"
+      ],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Web & Server Only",
+      "dependsOn": [
+        "Web: Start",
+        "Server: Start"
+      ],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Full Stack (Local)",
+      "dependsOn": [
+        "Web: Start",
+        "Server: Start",
+        "ML: Start All"
+      ],
+      "dependsOrder": "parallel",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Web: Stop",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "$pids = Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique; if ($pids) { $pids | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }; Write-Output 'Stopped web process(es).' } else { Write-Output 'No web process found.' }"
+      ],
+      "presentation": {
+        "panel": "new",
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Server: Stop",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "$portPids = @(Get-NetTCPConnection -LocalPort 5000 -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique); $nodemonPids = @(Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -and $_.Name -match '^(node|nodemon|npm|cmd)(\\.exe)?$' -and $_.CommandLine -match '(?i)(server[\\\\/].*src[\\\\/]index\\.js|npm\\s+run\\s+dev.*server|nodemon.*src[\\\\/]index\\.js)' } | Select-Object -ExpandProperty ProcessId -Unique); $pids = @($portPids + $nodemonPids) | Sort-Object -Unique; if ($pids.Count -gt 0) { $pids | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }; Write-Output 'Stopped server and nodemon process(es).' } else { Write-Output 'No server process found.' }"
+      ],
+      "presentation": {
+        "panel": "new",
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "ML: Stop Image Classifier",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "$pids = Get-NetTCPConnection -LocalPort 8000 -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique; if ($pids) { $pids | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }; Write-Output 'Stopped image-classifier process(es).' } else { Write-Output 'No image-classifier process found.' }"
+      ],
+      "presentation": {
+        "panel": "new",
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "ML: Stop Recommendation Engine",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "$pids = Get-NetTCPConnection -LocalPort 8001 -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique; if ($pids) { $pids | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }; Write-Output 'Stopped recommendation-engine process(es).' } else { Write-Output 'No recommendation-engine process found.' }"
+      ],
+      "presentation": {
+        "panel": "new",
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Stop Web & Server Only",
+      "dependsOn": [
+        "Web: Stop",
+        "Server: Stop"
+      ],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+    {
+      "label": "Stop Full Stack (Local)",
+      "dependsOn": [
+        "Web: Stop",
+        "Server: Stop",
+        "ML: Stop Image Classifier",
+        "ML: Stop Recommendation Engine"
+      ],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+    {
+      "label": "Server: Run Tests",
+      "type": "shell",
+      "command": "npm",
+      "args": ["test"],
+      "options": {
+        "cwd": "${workspaceFolder}/server"
+      },
+      "presentation": {
+        "panel": "new",
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

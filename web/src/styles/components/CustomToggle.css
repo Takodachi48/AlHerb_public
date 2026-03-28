@@ -1,0 +1,159 @@
+.toggle-wrap {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  container-type: inline-size;
+  /* Shrinks down to just the thumb + padding */
+  min-width: 64px;
+  width: 100%; /* default; override from parent as needed */
+  max-width: 100%;
+}
+
+.track {
+  position: relative;
+  width: 100%;
+  height: 64px;
+  border-radius: 6px;
+  background: var(--surface-secondary);
+  border: 1.5px solid var(--border-primary);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
+}
+
+.track::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  background: radial-gradient(ellipse at 78% 50%, rgba(249, 130, 52, 0.13) 0%, transparent 68%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.track-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  pointer-events: none;
+  /* Fade out when container gets narrow */
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.track-text.off {
+  right: 20px;
+  color: var(--text-primary);
+  opacity: 1;
+}
+
+.track-text.on {
+  left: 20px;
+  color: var(--text-primary);
+  opacity: 0;
+}
+
+.thumb {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  background: var(--surface-primary);
+  border: 1.5px solid var(--border-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 2;
+}
+
+.cf-icon {
+  width: 27px;
+  height: 27px;
+  transition: filter 0.4s ease;
+  filter: grayscale(1) brightness(0.4);
+}
+
+/* ─── ON STATE ─────────────────────────────────────────── */
+
+.toggle-wrap.on .track {
+  border-color: #f98234;
+  box-shadow: 0 0 0 1px rgba(249, 130, 52, 0.1), 0 0 32px rgba(249, 130, 52, 0.09);
+}
+
+.toggle-wrap.on .track::before {
+  opacity: 1;
+}
+
+.toggle-wrap.on .track-text.off {
+  opacity: 0;
+}
+
+.toggle-wrap.on .track-text.on {
+  opacity: 1;
+}
+
+.toggle-wrap.on .thumb {
+  /* Right aligned: track width - thumb width - right inset */
+  left: calc(100% - 57px);
+}
+
+.toggle-wrap.on .cf-icon {
+  filter: grayscale(0) brightness(1) drop-shadow(0 0 4px rgba(249, 130, 52, 0.65));
+}
+
+/* ─── RIPPLE ────────────────────────────────────────────── */
+
+.ripple {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  background: rgba(249, 130, 52, 0.22);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+}
+
+.ripple.animate-off {
+  animation: rippleOff 0.5s ease-out forwards;
+}
+
+.ripple.animate-on {
+  animation: rippleOn 0.5s ease-out forwards;
+}
+
+@keyframes rippleOff {
+  0%   { opacity: 0.55; transform: translateX(0) scale(1); }
+  100% { opacity: 0;    transform: translateX(0) scale(2.8); }
+}
+
+/* On-state ripple should also land at the dynamic right position.
+   Because @keyframes can't reference container queries, we use a
+   CSS custom property set inline by JS (see JSX), falling back to
+   the old fixed value for environments without container support. */
+@keyframes rippleOn {
+  0%   { opacity: 0.55; transform: translateX(var(--ripple-on-x, 156px)) scale(1); }
+  100% { opacity: 0;    transform: translateX(var(--ripple-on-x, 156px)) scale(2.8); }
+}
+
+/* ─── CONTAINER QUERIES ─────────────────────────────────── */
+
+/* Hide label text when the toggle is too narrow to show it comfortably */
+@container (max-width: 150px) {
+  .track-text {
+    opacity: 0 !important;
+  }
+}
+
+
+
+

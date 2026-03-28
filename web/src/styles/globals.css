@@ -1,0 +1,371 @@
+/* Global Styles - Updated for Accent Integration */
+/* Import theme variables */
+@import './primitives.css';
+@import './semantics.css';
+@import './typography.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Base Styles */
+@layer base {
+  html {
+    @apply scroll-smooth transition-colors duration-200;
+  }
+
+  body {
+    @apply bg-base-primary text-primary antialiased;
+    font-family: var(--font-core);
+  }
+
+  h1 {
+    @apply text-h1 font-display;
+  }
+
+  h2 {
+    @apply text-h2 font-display;
+  }
+
+  h3 {
+    @apply text-h3 font-display;
+  }
+
+  h4 {
+    @apply text-h4 font-display;
+  }
+
+  h5 {
+    @apply text-h3 font-display;
+  }
+
+  h6 {
+    @apply text-h4 font-display;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SCROLLBAR
+
+   Webkit (Chrome, Edge, Safari) — full pseudo-element API
+   Firefox                       — scrollbar-width / scrollbar-color
+   Both read from the same tokens so they stay in sync
+   across themes and dark mode automatically.
+
+   Sizes
+   ─────
+   --sb-size        main track width (vertical) / height (horizontal)
+   --sb-size-thin   for overflow containers that need a lighter touch
+══════════════════════════════════════════════════════════════ */
+
+:root {
+  --sb-size:      6px;
+  --sb-size-thin: 3px;
+  --sb-radius:    0px;   /* square — matches the design system's zero-radius language */
+}
+
+
+/* ── Vertical scrollbar (default — page & most containers) ──── */
+
+::-webkit-scrollbar {
+  width:  var(--sb-size);
+  height: var(--sb-size);   /* horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track {
+  background:    var(--surface-secondary);
+  border-left:   1px solid var(--border-weak);  /* thin rule separating track from content */
+}
+
+::-webkit-scrollbar-thumb {
+  background:    var(--border-brand);
+  border-radius: var(--sb-radius);
+  border-left:   2px solid var(--surface-secondary);  /* inset — gives thumb visual breathing room */
+  transition:    background var(--ease);
+}
+
+::-webkit-scrollbar-thumb:hover  { background: var(--border-strong); }
+::-webkit-scrollbar-thumb:active { background: var(--interactive-brand-primary); }
+
+::-webkit-scrollbar-corner {
+  background: var(--surface-secondary);
+}
+
+
+/* ── Firefox ────────────────────────────────────────────────── */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-brand) var(--surface-secondary);
+}
+
+
+/* ── Thin variant — for small overflow panels (dropdowns,
+   autocomplete lists, chatbot, code blocks, etc.) ─────────── */
+
+.scrollbar-thin::-webkit-scrollbar {
+  width:  var(--sb-size-thin);
+  height: var(--sb-size-thin);
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background:  transparent;
+  border-left: none;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background:    var(--border-primary);
+  border-radius: var(--sb-radius);
+  border:        none;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover  { background: var(--border-strong); }
+.scrollbar-thin::-webkit-scrollbar-thumb:active { background: var(--interactive-brand-primary); }
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-primary) transparent;
+}
+
+
+/* ── Hidden scrollbar — scrollable but no visible track ─────── */
+
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.prose pre {
+  @apply scrollbar-thin;
+}
+
+/* Custom Component Classes */
+@layer components {
+
+  /* Card Component */
+  .card {
+    @apply bg-surface-primary border border-border-primary rounded-xl p-6 shadow-sm;
+  }
+
+  .card-header {
+    @apply mb-4 pb-4 border-b border-border-primary;
+  }
+
+  /* Button Variants */
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium font-sans text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply bg-interactive-accent-primary text-on-accent hover:bg-interactive-accent-primary-hover px-4 py-2 rounded-lg font-medium font-sans text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-border-focus;
+  }
+
+  /* Secondary button */
+  .btn-secondary {
+    @apply bg-interactive-brand-primary text-on-brand hover:bg-interactive-brand-primary-hover px-4 py-2 rounded-lg font-medium font-sans text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-border-brand;
+  }
+
+  .btn-danger {
+    @apply bg-interactive-danger hover:bg-interactive-danger-hover text-on-danger focus:ring-border-danger focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  /* Input field */
+  .input {
+    @apply bg-surface-primary text-primary text-sm border border-border-primary rounded-lg px-4 py-2 placeholder:text-placeholder focus:outline-none focus:ring-2 focus:ring-border-focus;
+  }
+
+  .input-error {
+    @apply border-danger focus:ring-danger;
+  }
+
+  /* Form Group */
+  .form-group {
+    @apply mb-4;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-secondary mb-2 font-sans;
+  }
+
+  .form-error {
+    @apply text-danger text-sm mt-1 font-sans;
+  }
+
+  /* Navigation */
+  .nav-link {
+    @apply px-3 py-2 rounded-md text-secondary text-sm font-sans hover:bg-surface-secondary hover:text-accent transition-colors;
+  }
+
+  .nav-link-active {
+    @apply bg-surface-accent text-accent;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium font-accent;
+  }
+
+  .badge-primary {
+    @apply bg-surface-brand text-brand;
+  }
+
+  .badge-secondary {
+    @apply bg-surface-secondary text-primary;
+  }
+
+  /* Blog Content Styling */
+  .blog-content {
+    @apply prose prose-lg max-w-none prose-headings:font-display prose-a:text-link hover:prose-a:text-link-hover prose-img:rounded-lg;
+  }
+
+  /* Comment Styles */
+  .comment-item {
+    @apply border-l-2 border-border-primary pl-4 py-3 mb-4 hover:border-brand transition-colors;
+  }
+
+  .comment-deleted {
+    @apply opacity-50 italic;
+  }
+
+  /* Chat Styles */
+  .chat-message {
+    @apply max-w-3xl px-4 py-3 rounded-lg mb-2;
+  }
+
+  .chat-message-user {
+    @apply bg-surface-brand ml-auto;
+  }
+
+  .chat-message-assistant {
+    @apply bg-surface-primary mr-auto;
+  }
+
+  /* Map Container */
+  .map-container {
+    @apply w-full h-96 rounded-lg overflow-hidden shadow-md;
+  }
+
+  /* Modal Overlay */
+  .modal-overlay {
+    @apply fixed inset-0 backdrop-blur-sm z-40 flex items-center justify-center p-4;
+    background-color: color-mix(in srgb, var(--base-primary) 50%, transparent);
+  }
+
+  .modal-content {
+    @apply bg-surface-primary rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-border-primary;
+  }
+
+  /* Navigation Highlights */
+  .nav-highlight {
+    @apply bg-surface-accent transition-colors duration-200;
+  }
+
+  .nav-highlight-text {
+    @apply text-accent font-bold transition-colors duration-200;
+  }
+}
+
+/* Custom Utility Classes */
+@layer utilities {
+  .io-reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 420ms ease, transform 420ms ease;
+    will-change: opacity, transform;
+  }
+
+  .io-reveal[data-io-animation='fade'] {
+    transform: none;
+  }
+
+  .io-reveal[data-io-animation='zoom'] {
+    transform: scale(0.98);
+    transform-origin: center;
+  }
+
+  .io-reveal.io-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .io-reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-gradient-to-r from-brand to-brand-hover bg-clip-text text-transparent;
+  }
+
+  /* Checkbox Styles */
+  .checkbox {
+    @apply h-4 w-4 text-accent bg-surface-primary border-border-primary rounded focus:ring-2 focus:ring-border-focus focus:ring-offset-0 transition-colors duration-200 cursor-pointer;
+
+    /* Override default checkbox appearance */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* Ensure visibility in default state */
+    border-width: 2px;
+    border-style: solid;
+
+    /* Custom checkmark styling - only show when checked */
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' d='M20 6L9 17l-5-5'/%3e%3c/svg%3e");
+    background-size: 1rem 1rem;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* Hide checkmark when not checked */
+    background-position: -9999px -9999px;
+  }
+
+  .checkbox:checked {
+    @apply bg-interactive-accent-primary border-accent;
+
+    /* Show checkmark when checked */
+    background-position: center;
+  }
+
+  .checkbox:focus {
+    @apply outline-none ring-2 ring-border-focus ring-offset-0;
+  }
+
+  .checkbox:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  /* Admin checkbox variant */
+  .checkbox-admin {
+    @apply border-border-primary bg-surface-secondary text-accent;
+  }
+
+  .checkbox-admin:checked {
+    @apply bg-interactive-accent-primary border-accent;
+  }
+
+  .checkbox-admin:focus {
+    @apply outline-none ring-2 ring-border-focus ring-offset-0;
+  }
+
+  @keyframes progress {
+    from {
+      width: 100%;
+    }
+
+    to {
+      width: 0%;
+    }
+  }
+}
+

@@ -1,0 +1,45 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Web: Frontend",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "cwd": "${workspaceFolder}/web"
+    },
+    {
+      "name": "Server: API",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "cwd": "${workspaceFolder}/server"
+    },
+    {
+      "name": "ML: Image Classifier",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"$env:PYTHONPATH='src'; .\\.venv\\Scripts\\python.exe -m uvicorn app.main:app --host 0.0.0.0 --port 8000\"",
+      "cwd": "${workspaceFolder}/ml-services/image-classifier"
+    },
+    {
+      "name": "ML: Recommendation Engine",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": ".\\.venv\\Scripts\\python.exe src/main.py",
+      "cwd": "${workspaceFolder}/ml-services/recommendation-engine"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Launch Full Stack (Local)",
+      "configurations": [
+        "Web: Frontend",
+        "Server: API",
+        "ML: Image Classifier",
+        "ML: Recommendation Engine"
+      ],
+      "stopAll": true
+    }
+  ]
+}

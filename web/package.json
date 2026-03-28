@@ -1,0 +1,70 @@
+{
+  "name": "herbal-medicine-web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Web frontend for Herbal Medicine Recommendation System",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "preview": "vite preview",
+    "test": "vitest --run --passWithNoTests",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
+  },
+  "keywords": [
+    "herbal-medicine",
+    "react",
+    "vite",
+    "tailwindcss",
+    "firebase"
+  ],
+  "author": "Herbal Medicine Team",
+  "license": "MIT",
+  "dependencies": {
+    "@radix-ui/react-checkbox": "^1.3.3",
+    "@radix-ui/react-switch": "^1.2.6",
+    "axios": "^1.13.6",
+    "firebase": "^12.10.0",
+    "framer-motion": "^11.18.2",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^0.576.0",
+    "postcss-import": "^16.1.1",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-leaflet": "^4.2.1",
+    "react-router-dom": "^6.20.1",
+    "recharts": "^2.15.0",
+    "supercluster": "^8.0.1",
+    "swiper": "^12.1.0",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.10",
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^13.4.0",
+    "@types/react": "^18.3.28",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react": "^4.2.0",
+    "@vitest/ui": "^4.0.18",
+    "autoprefixer": "^10.4.27",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "globals": "^16.0.0",
+    "@eslint/js": "^9.21.0",
+    "jsdom": "^23.0.1",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^3.4.0",
+    "vite": "^7.3.1",
+    "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}

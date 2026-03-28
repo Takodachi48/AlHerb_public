@@ -1,0 +1,242 @@
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingTop: 60,
+    paddingBottom: 20,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7EB',
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#F3F4F6',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backButtonText: {
+    fontSize: 18,
+    color: '#374151',
+    fontWeight: '600',
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#111827',
+  },
+  featuredCard: {
+    margin: 20,
+    padding: 20,
+    backgroundColor: '#10B981',
+    borderRadius: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  featuredBadge: {
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    marginBottom: 12,
+  },
+  featuredText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#FFFFFF',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  featuredTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    marginBottom: 8,
+    lineHeight: 28,
+  },
+  featuredExcerpt: {
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.9)',
+    lineHeight: 20,
+    marginBottom: 16,
+  },
+  featuredMeta: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  featuredAuthor: {
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.8)',
+    fontWeight: '500',
+  },
+  featuredReadTime: {
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.8)',
+  },
+  categoriesSection: {
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+  },
+  categoriesContainer: {
+    paddingHorizontal: 20,
+  },
+  categoryChip: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    backgroundColor: '#FFFFFF',
+    marginRight: 8,
+  },
+  categoryChipSelected: {
+    backgroundColor: '#10B981',
+    borderColor: '#10B981',
+  },
+  categoryText: {
+    fontSize: 14,
+    color: '#374151',
+    fontWeight: '500',
+  },
+  categoryTextSelected: {
+    color: '#FFFFFF',
+  },
+  postsSection: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#111827',
+    marginBottom: 16,
+    marginTop: 8,
+  },
+  postsList: {
+    paddingBottom: 20,
+  },
+  postCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  postHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  categoryBadge: {
+    backgroundColor: '#E5E7EB',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  categoryText: {
+    fontSize: 12,
+    color: '#374151',
+    fontWeight: '500',
+  },
+  readTime: {
+    fontSize: 12,
+    color: '#6B7280',
+  },
+  postTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#111827',
+    marginBottom: 8,
+    lineHeight: 24,
+  },
+  postExcerpt: {
+    fontSize: 14,
+    color: '#6B7280',
+    lineHeight: 20,
+    marginBottom: 12,
+  },
+  postFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  author: {
+    fontSize: 14,
+    color: '#374151',
+    fontWeight: '500',
+  },
+  publishDate: {
+    fontSize: 12,
+    color: '#9CA3AF',
+  },
+  newsletterCard: {
+    margin: 20,
+    backgroundColor: '#F9FAFB',
+    borderRadius: 12,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  newsletterContent: {
+    alignItems: 'center',
+  },
+  newsletterEmoji: {
+    fontSize: 32,
+    marginBottom: 12,
+  },
+  newsletterTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#111827',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  newsletterText: {
+    fontSize: 14,
+    color: '#6B7280',
+    textAlign: 'center',
+    lineHeight: 20,
+    marginBottom: 16,
+  },
+  newsletterButton: {
+    backgroundColor: '#10B981',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+  },
+  newsletterButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+});

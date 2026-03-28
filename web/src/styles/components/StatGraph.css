@@ -1,0 +1,371 @@
+/* ═══════════════════════════════════════════════════════════════
+   StatGraph.css — Bio-Industrial Minimal Chart Styles
+   All variants: line, dual, bar, hbar, gauge, donut, sparkline
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── ROOT ─────────────────────────────────────────────────── */
+.sg-root {
+    width: 100%;
+}
+
+.sg-placeholder {
+    border-radius: 6px;
+    background: linear-gradient(90deg,
+            var(--surface-secondary) 25%,
+            var(--surface-tertiary) 37%,
+            var(--surface-secondary) 63%);
+    background-size: 400% 100%;
+    animation: sg-placeholder-pulse 1.2s ease-in-out infinite;
+}
+
+.sg-reveal {
+    opacity: 0;
+    transition: opacity 320ms ease, transform 320ms ease;
+    will-change: opacity, transform;
+}
+
+.sg-reveal--fade {
+    transform: translateY(0);
+}
+
+.sg-reveal--slide {
+    transform: translateY(16px);
+}
+
+.sg-reveal--zoom {
+    transform: scale(0.97);
+    transform-origin: center;
+}
+
+.sg-reveal--visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+@keyframes sg-placeholder-pulse {
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.sg-root--spark {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: auto;
+}
+
+/* ── HEADER ───────────────────────────────────────────────── */
+.sg-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.sg-title {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.01em;
+}
+
+.sg-subtitle {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+/* ── CHART AREA ───────────────────────────────────────────── */
+.sg-chart-area {
+    width: 100%;
+}
+
+.sg-svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    display: block;
+}
+
+/* ── GRID / BASELINE ──────────────────────────────────────── */
+.sg-grid-line {
+    stroke: var(--border-primary);
+    stroke-width: 1;
+    stroke-dasharray: 4, 3;
+    opacity: 0.7;
+}
+
+.sg-grid-line--vert {
+    stroke-dasharray: 3, 4;
+    opacity: 0.45;
+}
+
+.sg-baseline {
+    stroke: var(--border-primary);
+    stroke-width: 1.5;
+}
+
+.sg-crosshair {
+    stroke: var(--border-strong);
+    stroke-width: 1;
+    stroke-dasharray: 3, 3;
+    pointer-events: none;
+}
+
+/* ── AXIS LABELS ──────────────────────────────────────────── */
+.sg-axis-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.06em;
+    fill: var(--text-tertiary);
+    user-select: none;
+}
+
+.sg-axis-label--right {
+    fill: var(--text-weak);
+}
+
+/* ── DOTS ─────────────────────────────────────────────────── */
+.sg-dot {
+    transition: r 150ms ease, opacity 150ms ease;
+}
+
+
+/* ── LEGEND ───────────────────────────────────────────────── */
+.sg-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.sg-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sg-legend-swatch {
+    width: 10px;
+    height: 3px;
+    border-radius: 1px;
+    flex-shrink: 0;
+}
+
+.sg-legend-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.sg-legend-unit {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    color: var(--text-weak);
+    letter-spacing: 0.06em;
+}
+
+/* ── HORIZONTAL BAR ───────────────────────────────────────── */
+.sg-hbar-track {
+    fill: var(--surface-secondary);
+    stroke: none;
+}
+
+.sg-hbar-label {
+    font-family: var(--font-mono) !important;
+    font-size: 8.5px !important;
+    letter-spacing: 0.04em;
+    fill: var(--text-secondary);
+    transition: fill 150ms ease;
+}
+
+.sg-hbar-label--active {
+    fill: var(--text-primary);
+}
+
+/* ── GAUGE ────────────────────────────────────────────────── */
+.sg-gauge-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.sg-gauge-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.sg-gauge-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.sg-gauge-value {
+    font-family: var(--font-ui);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.sg-gauge-track {
+    position: relative;
+    height: 6px;
+    background: var(--surface-tertiary);
+    border-radius: 3px;
+    overflow: visible;
+}
+
+.sg-gauge-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sg-gauge-threshold {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 2px;
+    background: var(--text-secondary);
+    transform: translateX(-50%);
+}
+
+.sg-gauge-threshold-label {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 7px;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+}
+
+/* ── DONUT ────────────────────────────────────────────────── */
+.sg-donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.sg-donut-svg {
+    overflow: visible;
+    flex-shrink: 0;
+}
+
+.sg-donut-center-value {
+    font-family: var(--font-ui);
+    font-size: 22px;
+    font-weight: 600;
+    fill: var(--text-primary);
+    letter-spacing: -0.02em;
+}
+
+.sg-donut-center-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    fill: var(--text-tertiary);
+}
+
+.sg-donut-center-pct {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    fill: var(--text-secondary);
+    letter-spacing: 0.06em;
+}
+
+.sg-donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 160px;
+}
+
+.sg-donut-legend-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    cursor: pointer;
+    transition: opacity 150ms ease;
+}
+
+.sg-donut-legend-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--text-secondary);
+    flex: 1;
+}
+
+.sg-donut-legend-value {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 36px;
+    text-align: right;
+}
+
+.sg-donut-legend-pct {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    min-width: 32px;
+    text-align: right;
+}
+
+.sg-donut-legend-row.is-active .sg-donut-legend-label {
+    color: var(--text-primary);
+}
+
+/* ── SPARKLINE ────────────────────────────────────────────── */
+.sg-sparkline-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sg-sparkline-svg {
+    width: 80px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.sg-spark-trend {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    font-weight: 400;
+}
+
+/* ── EMPTY ────────────────────────────────────────────────── */
+.sg-empty {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-weak);
+    padding: 12px 0;
+}

@@ -1,0 +1,261 @@
+/* ═══════════════════════════════════════════════════════════════
+   AdminDashboard.css — Bio-Industrial Admin Layout Patterns
+   Section headers, stat rows, stat cells, animated sections.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── SECTION HEADER ───────────────────────────────────────── */
+.adm-sec-head {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 20px;
+}
+
+.adm-sec-num {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    color: var(--text-on-neutral);
+    background: var(--interactive-neutral-primary);
+    padding: 5px 12px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 6px 0 0 6px;
+}
+
+.adm-sec-name {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    background: var(--surface-secondary);
+    border: 1.5px solid var(--border-primary);
+    border-left: none;
+    padding: 5px 14px;
+    display: flex;
+    align-items: center;
+}
+
+.adm-sec-line {
+    flex: 1;
+    border-bottom: 1.5px solid var(--border-primary);
+    align-self: flex-end;
+}
+
+.adm-sec-badge {
+    margin-left: auto;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+}
+
+/* ── STAT ROW (connected cells) ───────────────────────────── */
+.adm-stat-row {
+    display: flex;
+    gap: 0;
+    border: 1.5px solid var(--border-primary);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--surface-primary);
+}
+
+.adm-stat-row>.adm-stat-cell+.adm-stat-cell {
+    border-left: 1.5px solid var(--border-primary);
+}
+
+/* ── STAT CELL ────────────────────────────────────────────── */
+.adm-stat-cell {
+    flex: 1;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+    min-width: 0;
+}
+
+.adm-stat-cell::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--border-weak);
+}
+
+.adm-stat-cell--ok::before {
+    background: var(--interactive-success);
+}
+
+.adm-stat-cell--warning::before {
+    background: var(--interactive-warning);
+}
+
+.adm-stat-cell--danger::before {
+    background: var(--interactive-danger);
+}
+
+.adm-stat-cell--accent::before {
+    background: var(--border-brand);
+}
+
+.adm-stat-key {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+}
+
+.adm-stat-val {
+    font-family: var(--font-ui);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.adm-stat-val--ok {
+    color: var(--text-success);
+}
+
+.adm-stat-val--warning {
+    color: var(--text-warning);
+}
+
+.adm-stat-val--danger {
+    color: var(--text-danger);
+}
+
+.adm-stat-sub {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.06em;
+    color: var(--text-weak);
+    margin-top: 2px;
+}
+
+/* responsive stacking */
+@media (max-width: 768px) {
+    .adm-stat-row {
+        flex-direction: column;
+    }
+
+    .adm-stat-row>.adm-stat-cell+.adm-stat-cell {
+        border-left: none;
+        border-top: 1.5px solid var(--border-primary);
+    }
+}
+
+/* ── ANIMATED ENTRY ───────────────────────────────────────── */
+.adm-section {
+    animation: adm-fade-up 0.5s ease both;
+}
+
+.adm-section:nth-child(2) {
+    animation-delay: 0.04s;
+}
+
+.adm-section:nth-child(3) {
+    animation-delay: 0.08s;
+}
+
+.adm-section:nth-child(4) {
+    animation-delay: 0.12s;
+}
+
+.adm-section:nth-child(5) {
+    animation-delay: 0.16s;
+}
+
+.adm-section:nth-child(6) {
+    animation-delay: 0.20s;
+}
+
+.adm-section:nth-child(7) {
+    animation-delay: 0.24s;
+}
+
+.adm-section:nth-child(8) {
+    animation-delay: 0.28s;
+}
+
+.adm-section:nth-child(9) {
+    animation-delay: 0.32s;
+}
+
+.adm-section:nth-child(10) {
+    animation-delay: 0.36s;
+}
+
+@keyframes adm-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── INFO ROW (key-value pairs) ───────────────────────────── */
+.adm-info-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 0;
+}
+
+.adm-info-row+.adm-info-row {
+    border-top: 1px solid var(--border-weakest);
+}
+
+.adm-info-key {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.adm-info-val {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* ── REVIEW QUEUE / LIST ITEMS ────────────────────────────── */
+.adm-list-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border: 1px solid var(--border-weakest);
+    border-left: 3px solid var(--border-weak);
+    border-radius: 6px;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--text-secondary);
+    transition: border-left-color var(--ease), background var(--ease);
+}
+
+.adm-list-item:hover {
+    border-left-color: var(--border-brand);
+    background: var(--surface-secondary);
+}
+
+.adm-list-item+.adm-list-item {
+    margin-top: 6px;
+}

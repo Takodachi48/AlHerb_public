@@ -1,0 +1,791 @@
+/* ============================================================
+   SEMANTICS.CSS
+   Maps generic primitive slots → meaningful design tokens,
+   then exports them as component-ready custom properties.
+
+   Depends on: primitives.css (must load first)
+
+   Key principle
+   ─────────────
+   This file reads ONLY --brand-*, --neutral-*, --accent-*,
+   and --intent-*. It never mentions a theme name.
+
+   60-30-10 RULE
+   ─────────────
+   60%  neutral   — base canvas, most backgrounds, text, borders
+   15%  brand     — tinted panels/surfaces + identity moments
+   15%  brand     — secondary interactive elements
+   10%  accent    — CTAs, active states, focus rings, indicators
+
+   PERCEIVED LUMINANCE HIERARCHY
+   ──────────────────────────────
+   All hierarchical tokens follow perceptual contrast rules:
+
+   Light mode: ~2% perceived Δ between steps
+     primary → secondary: +1 ramp stop
+     secondary → tertiary: +1 ramp stop (total +2 from primary)
+
+   Dark mode: ~4% perceived Δ between steps
+     primary → secondary: +1 ramp stop (lighter = more elevated)
+     secondary → tertiary: +1 ramp stop (total +2 from primary)
+
+   Applied to: base, surface, text, icon, border hierarchies
+   AND interactive state ladders (hover/pressed)
+
+   IMPORTANCE = CONTRAST RULE
+   ──────────────────────────
+   Interactive fills ordered by visual weight relative to canvas:
+   Light: darkest = most important  Dark: lightest = most important
+     Most important  → neutral-primary  (900 light / 100 dark)
+     High importance → accent-primary   (600 light / 300 dark)
+     Mid importance  → brand-primary    (500 light / 400 dark)
+     Low importance  → *-secondary fills (tints)
+
+   SURFACE PANELS
+   ──────────────
+   Surfaces (cards, panels, sidebars) use the --brand-* ramp at
+   near-white stops in light mode and near-black stops in dark.
+   This gives panels a subtle on-brand warmth with zero extra ramp.
+
+   OKLCH CHART PALETTE
+   ───────────────────
+   12-color perceptually uniform spectrum for data visualization.
+   Light: L=0.65 — vibrant on white. Dark: L=0.72 — bright on dark.
+
+   ============================================================ */
+
+
+/* ============================================================
+   LIGHT MODE  (default — no class required)
+   ============================================================ */
+
+:root {
+
+  /* ── INTENT: SUCCESS ──────────────────────────────────────── */
+  --color-intent-success:            var(--intent-success-400);
+  --color-intent-success-strong:     var(--intent-success-600);
+  --color-intent-success-weak:       var(--intent-success-200);
+  --color-intent-success-weakest:    var(--intent-success-50);
+  --color-intent-success-text:       var(--intent-success-700);
+  --color-intent-success-text-on:    var(--intent-success-50);
+  --color-intent-success-border:     var(--intent-success-300);
+  --color-intent-success-icon:       var(--intent-success-500);
+  --color-intent-success-hover:      var(--intent-success-500);
+  --color-intent-success-pressed:    var(--intent-success-600);
+  --color-intent-success-disabled:   var(--intent-success-200);
+
+  /* ── INTENT: WARNING ──────────────────────────────────────── */
+  --color-intent-warning:            var(--intent-warning-300);
+  --color-intent-warning-strong:     var(--intent-warning-500);
+  --color-intent-warning-weak:       var(--intent-warning-100);
+  --color-intent-warning-weakest:    var(--intent-warning-50);
+  --color-intent-warning-text:       var(--intent-warning-700);
+  --color-intent-warning-text-on:    var(--intent-warning-950);
+  --color-intent-warning-border:     var(--intent-warning-200);
+  --color-intent-warning-icon:       var(--intent-warning-500);
+  --color-intent-warning-hover:      var(--intent-warning-400);
+  --color-intent-warning-pressed:    var(--intent-warning-500);
+  --color-intent-warning-disabled:   var(--intent-warning-100);
+
+  /* ── INTENT: DANGER ───────────────────────────────────────── */
+  --color-intent-danger:             var(--intent-danger-400);
+  --color-intent-danger-strong:      var(--intent-danger-600);
+  --color-intent-danger-weak:        var(--intent-danger-100);
+  --color-intent-danger-weakest:     var(--intent-danger-50);
+  --color-intent-danger-text:        var(--intent-danger-700);
+  --color-intent-danger-text-on:     var(--intent-danger-50);
+  --color-intent-danger-border:      var(--intent-danger-200);
+  --color-intent-danger-icon:        var(--intent-danger-500);
+  --color-intent-danger-hover:       var(--intent-danger-500);
+  --color-intent-danger-pressed:     var(--intent-danger-600);
+  --color-intent-danger-disabled:    var(--intent-danger-100);
+
+  /* ── INTENT: INFO ─────────────────────────────────────────── */
+  --color-intent-info:               var(--intent-info-500);
+  --color-intent-info-strong:        var(--intent-info-700);
+  --color-intent-info-weak:          var(--intent-info-100);
+  --color-intent-info-weakest:       var(--intent-info-50);
+  --color-intent-info-text:          var(--intent-info-700);
+  --color-intent-info-text-on:       var(--intent-info-50);
+  --color-intent-info-border:        var(--intent-info-200);
+  --color-intent-info-icon:          var(--intent-info-500);
+  --color-intent-info-hover:         var(--intent-info-600);
+  --color-intent-info-pressed:       var(--intent-info-700);
+  --color-intent-info-disabled:      var(--intent-info-100);
+
+  /* ── CHART COLORS (OKLCH) ─────────────────────────────────── */
+  /* Light: L=0.65, C=0.15 — vibrant, readable on light bg      */
+  --color-chart-1:  oklch(0.65 0.15 0);      /* red */
+  --color-chart-2:  oklch(0.65 0.15 30);     /* orange */
+  --color-chart-3:  oklch(0.65 0.15 60);     /* yellow */
+  --color-chart-4:  oklch(0.65 0.15 90);     /* lime */
+  --color-chart-5:  oklch(0.65 0.15 120);    /* green */
+  --color-chart-6:  oklch(0.65 0.15 150);    /* teal */
+  --color-chart-7:  oklch(0.65 0.15 180);    /* cyan */
+  --color-chart-8:  oklch(0.65 0.15 210);    /* sky */
+  --color-chart-9:  oklch(0.65 0.15 240);    /* blue */
+  --color-chart-10: oklch(0.65 0.15 270);    /* indigo */
+  --color-chart-11: oklch(0.65 0.15 300);    /* purple */
+  --color-chart-12: oklch(0.65 0.15 330);    /* magenta */
+
+  /* ── BASE (60%) ───────────────────────────────────────────── */
+  /* Canvas. Light: neutral-50 is the whitest. Steps go darker. */
+  --color-base-primary:              var(--neutral-50);
+  --color-base-secondary:            var(--neutral-100);  /* +1 stop ≈ 2% Δ */
+  --color-base-tertiary:             var(--neutral-200);  /* +2 stops ≈ 4% Δ */
+
+  /* ── SURFACE (15%) ────────────────────────────────────────── */
+  /* Panels, cards, sidebars. Use brand ramp for on-brand warmth */
+  /* Light: brand-50/100/200 are near-white with a hint of hue  */
+  --color-surface-primary:           var(--brand-50);
+  --color-surface-secondary:         var(--brand-100);    /* +1 stop ≈ 2% Δ */
+  --color-surface-tertiary:          var(--brand-200);    /* +2 stops ≈ 4% Δ */
+  --color-surface-brand:             var(--brand-100);
+  --color-surface-brand-strong:      var(--brand-400);    /* +1 stop */
+  --color-surface-accent:            var(--accent-50);
+  --color-surface-accent-strong:     var(--accent-100);   /* +1 stop */
+  --color-neutral-subtle:            var(--neutral-400);
+
+  /* ── TEXT ─────────────────────────────────────────────────── */
+  /* Light: 950 is the darkest readable black. Steps go lighter. */
+  --color-text-strong:               var(--neutral-950);
+  --color-text-primary:              var(--neutral-900);  /* -1 stop ≈ 2% Δ */
+  --color-text-secondary:            var(--neutral-700);  /* -3 stops ≈ 6% Δ */
+  --color-text-tertiary:             var(--neutral-500);  /* -5 stops ≈ 10% Δ */
+  --color-text-weak:                 var(--neutral-400);
+  --color-text-weakest:              var(--neutral-300);
+  --color-text-placeholder:          var(--neutral-400);
+  --color-text-disabled:             var(--neutral-300);
+  --color-text-on-brand:             var(--neutral-300);
+  --color-text-on-accent:            var(--neutral-950);
+  --color-text-on-neutral:           var(--neutral-50);
+  --color-text-on-neutral-alt:       var(--neutral-950);
+  --color-text-on-dark:              var(--neutral-50);
+  /* brand text */
+  --color-text-brand:                var(--brand-600);
+  --color-text-brand-hover:          var(--brand-700);    /* +1 stop ≈ 2% Δ */
+  --color-text-brand-pressed:        var(--brand-800);    /* +2 stops */
+  /* accent-colored text — links, active labels */
+  --color-text-accent:               var(--accent-600);
+  --color-text-accent-hover:         var(--accent-700);   /* +1 stop ≈ 2% Δ */
+  --color-text-accent-pressed:       var(--accent-800);   /* +2 stops */
+
+  /* role-colored text */
+  --color-text-role-op:              #C45E00;
+  --color-text-role-admin:           #B01A00;
+  --color-text-role-moderator:       #1A7A35;
+  --color-text-role-expert:          #0060B0;
+
+  /* ── ICON ─────────────────────────────────────────────────── */
+  --color-icon-primary:              var(--neutral-800);
+  --color-icon-secondary:            var(--neutral-600);  /* -2 stops ≈ 4% Δ */
+  --color-icon-tertiary:             var(--neutral-400);  /* -4 stops ≈ 8% Δ */
+  --color-icon-weak:                 var(--neutral-300);
+  --color-icon-disabled:             var(--neutral-300);
+  --color-icon-brand:                var(--brand-500);
+  --color-icon-brand-hover:          var(--brand-600);    /* +1 stop */
+  --color-icon-brand-pressed:        var(--brand-700);    /* +2 stops */
+  --color-icon-on-brand:             var(--neutral-950);
+  --color-icon-accent:               var(--accent-500);
+  --color-icon-accent-hover:         var(--accent-600);   /* +1 stop */
+  --color-icon-accent-pressed:       var(--accent-700);   /* +2 stops */
+  --color-icon-on-accent:            var(--neutral-950);
+  --color-icon-on-neutral:           var(--neutral-50);
+
+  /* ── BORDER ───────────────────────────────────────────────── */
+  /* Light: borders are dark-on-light. Strong = most visible.   */
+  --color-border-strong:             var(--neutral-300);
+  --color-border-primary:            var(--neutral-200);  /* -1 stop ≈ 2% Δ */
+  --color-border-secondary:          var(--neutral-100);  /* -2 stops ≈ 4% Δ */
+  --color-border-weak:               var(--neutral-100);
+  --color-border-weakest:            var(--neutral-50);
+  --color-border-disabled:           var(--neutral-200);
+  --color-border-brand:              var(--brand-300);
+  --color-border-brand-hover:        var(--brand-400);    /* +1 stop */
+  --color-border-focus:              var(--accent-500);
+  --color-border-accent:             var(--accent-400);
+  --color-border-accent-hover:       var(--accent-500);   /* +1 stop */
+
+  /* ── INTERACTIVE — IMPORTANCE = CONTRAST vs CANVAS ────────── */
+  /* Light: darker fill = more contrast on white = more important */
+
+  /* NEUTRAL PRIMARY — darkest fill, most important              */
+  --color-neutral-primary:           var(--neutral-900);
+  --color-neutral-primary-hover:     var(--neutral-950);  /* +1 stop */
+  --color-neutral-primary-pressed:   var(--neutral-950);  /* clamped */
+  --color-neutral-primary-disabled:  var(--neutral-300);
+  --color-neutral-secondary:         var(--neutral-100);
+  --color-neutral-secondary-hover:   var(--neutral-200);  /* +1 stop */
+  --color-neutral-secondary-pressed: var(--neutral-300);  /* +2 stops */
+  --color-neutral-secondary-disabled:var(--neutral-50);
+
+  /* ACCENT PRIMARY — dark, high importance (primary CTA)        */
+  --color-accent-primary:            var(--accent-600);
+  --color-accent-primary-hover:      var(--accent-700);   /* +1 stop ≈ 2% Δ */
+  --color-accent-primary-pressed:    var(--accent-800);   /* +2 stops ≈ 4% Δ */
+  --color-accent-primary-focus:      var(--accent-600);
+  --color-accent-primary-disabled:   var(--accent-200);
+  --color-accent-secondary:          var(--accent-100);
+  --color-accent-secondary-hover:    var(--accent-200);   /* +1 stop */
+  --color-accent-secondary-pressed:  var(--accent-300);   /* +2 stops */
+  --color-accent-secondary-disabled: var(--accent-50);
+  --color-accent-active:             var(--accent-600);
+  --color-accent-active-text:        var(--neutral-50);
+  --color-accent-progress:           var(--accent-600);
+  --color-accent-indicator:          var(--accent-500);
+
+  /* BRAND PRIMARY — medium, mid importance (secondary CTA)      */
+  --color-brand-primary:             var(--brand-500);
+  --color-brand-primary-hover:       var(--brand-600);    /* +1 stop ≈ 2% Δ */
+  --color-brand-primary-pressed:     var(--brand-700);    /* +2 stops ≈ 4% Δ */
+  --color-brand-primary-focus:       var(--brand-500);
+  --color-brand-primary-disabled:    var(--brand-200);
+  --color-brand-secondary:           var(--brand-100);
+  --color-brand-secondary-hover:     var(--brand-200);    /* +1 stop */
+  --color-brand-secondary-pressed:   var(--brand-300);    /* +2 stops */
+  --color-brand-secondary-disabled:  var(--brand-50);
+}
+
+
+/* ============================================================
+   DARK MODE  (.dark class on :root)
+   ============================================================ */
+
+:root.dark {
+
+  /* intent tokens are luminance-agnostic — unchanged in dark    */
+
+  /* ── CHART COLORS (OKLCH) ─────────────────────────────────── */
+  /* Dark: L=0.72, C=0.14 — brighter & readable on dark bg      */
+  --color-chart-1:  oklch(0.72 0.14 0);
+  --color-chart-2:  oklch(0.72 0.14 30);
+  --color-chart-3:  oklch(0.72 0.14 60);
+  --color-chart-4:  oklch(0.72 0.14 90);
+  --color-chart-5:  oklch(0.72 0.14 120);
+  --color-chart-6:  oklch(0.72 0.14 150);
+  --color-chart-7:  oklch(0.72 0.14 180);
+  --color-chart-8:  oklch(0.72 0.14 210);
+  --color-chart-9:  oklch(0.72 0.14 240);
+  --color-chart-10: oklch(0.72 0.14 270);
+  --color-chart-11: oklch(0.72 0.14 300);
+  --color-chart-12: oklch(0.72 0.14 330);
+
+  /* ── BASE (60%) ───────────────────────────────────────────── */
+  /* Dark: 950 is the deepest canvas. Steps get lighter (elevated) */
+  /* 4% perceived Δ between steps — double the light mode gap   */
+  --color-base-primary:              var(--neutral-950);
+  --color-base-secondary:            var(--neutral-900);  /* +1 stop ≈ 4% Δ */
+  --color-base-tertiary:             var(--neutral-800);  /* +2 stops ≈ 8% Δ */
+
+  /* ── SURFACE (15%) ────────────────────────────────────────── */
+  /* Dark: brand near-black stops. More elevated = lighter stop. */
+  --color-surface-primary:           var(--brand-900);
+  --color-surface-secondary:         var(--brand-800);    /* +1 stop ≈ 4% Δ */
+  --color-surface-tertiary:          var(--brand-700);    /* +2 stops ≈ 8% Δ */
+  --color-surface-brand:             var(--brand-950);
+  --color-surface-brand-strong:      var(--brand-950);    /* +1 stop */
+  --color-surface-accent:            var(--accent-950);
+  --color-surface-accent-strong:     var(--accent-900);   /* +1 stop */
+  --color-neutral-subtle:            var(--neutral-600);
+
+  /* ── TEXT ─────────────────────────────────────────────────── */
+  /* Dark: text is light-on-dark. Strong = near-white. Steps go darker (weaker). */
+  /* 4% perceived Δ between steps                               */
+  --color-text-strong:               var(--neutral-50);
+  --color-text-primary:              var(--neutral-100);  /* +1 stop ≈ 4% Δ */
+  --color-text-secondary:            var(--neutral-300);  /* +3 stops ≈ 12% Δ */
+  --color-text-tertiary:             var(--neutral-500);  /* +5 stops */
+  --color-text-weak:                 var(--neutral-600);
+  --color-text-weakest:              var(--neutral-700);
+  --color-text-placeholder:          var(--neutral-500);
+  --color-text-disabled:             var(--neutral-600);
+  --color-text-on-brand:             var(--neutral-100);
+  --color-text-on-accent:            var(--neutral-950);
+  --color-text-on-neutral:           var(--neutral-950);
+  --color-text-on-neutral-alt:       var(--neutral-50);
+  /* dark brand text — lighter for legibility on dark bg        */
+  --color-text-brand:                var(--brand-300);
+  --color-text-brand-hover:          var(--brand-200);    /* -1 stop ≈ 4% Δ */
+  --color-text-brand-pressed:        var(--brand-100);    /* -2 stops */
+  /* dark accent text */
+  --color-text-accent:               var(--accent-300);
+  --color-text-accent-hover:         var(--accent-200);   /* -1 stop ≈ 4% Δ */
+  --color-text-accent-pressed:       var(--accent-100);   /* -2 stops */
+
+  /* role-colored text */
+  --color-text-role-op:              #C45E00;
+  --color-text-role-admin:           #B01A00;
+  --color-text-role-moderator:       #1A7A35;
+  --color-text-role-expert:          #0060B0;
+  --color-icon-tertiary:             var(--neutral-600);  /* +4 stops ≈ 16% Δ */
+  --color-icon-weak:                 var(--neutral-700);
+  --color-icon-disabled:             var(--neutral-700);
+  --color-icon-brand:                var(--brand-300);
+  --color-icon-brand-hover:          var(--brand-200);    /* -1 stop */
+  --color-icon-brand-pressed:        var(--brand-100);    /* -2 stops */
+  --color-icon-on-brand:             var(--neutral-950);
+  --color-icon-accent:               var(--accent-300);
+  --color-icon-accent-hover:         var(--accent-200);   /* -1 stop */
+  --color-icon-accent-pressed:       var(--accent-100);   /* -2 stops */
+  --color-icon-on-accent:            var(--neutral-950);
+  --color-icon-on-neutral:           var(--neutral-950);
+
+  /* ── BORDER ───────────────────────────────────────────────── */
+  /* Dark: borders are light-on-dark. Strong = most visible.    */
+  /* Borders go darker (less visible) as hierarchy weakens.     */
+  --color-border-strong:             var(--neutral-600);
+  --color-border-primary:            var(--neutral-700);  /* +1 stop ≈ 4% Δ */
+  --color-border-secondary:          var(--neutral-800);  /* +2 stops ≈ 8% Δ */
+  --color-border-weak:               var(--neutral-800);
+  --color-border-weakest:            var(--neutral-900);  /* +3 stops */
+  --color-border-disabled:           var(--neutral-700);
+  --color-border-brand:              var(--brand-700);
+  --color-border-brand-hover:        var(--brand-600);    /* -1 stop */
+  --color-border-focus:              var(--accent-400);
+  --color-border-accent:             var(--accent-600);
+  --color-border-accent-hover:       var(--accent-500);   /* -1 stop */
+
+  /* ── INTERACTIVE — IMPORTANCE = CONTRAST vs CANVAS ────────── */
+  /* Dark: lighter fill = more contrast on dark = more important  */
+
+  /* NEUTRAL PRIMARY — lightest fill, most important             */
+  --color-neutral-primary:           var(--neutral-100);
+  --color-neutral-primary-hover:     var(--neutral-50);   /* -1 stop (brighter) */
+  --color-neutral-primary-pressed:   var(--neutral-50);   /* clamped */
+  --color-neutral-primary-disabled:  var(--neutral-700);
+  --color-neutral-secondary:         var(--neutral-800);
+  --color-neutral-secondary-hover:   var(--neutral-700);  /* -1 stop */
+  --color-neutral-secondary-pressed: var(--neutral-600);  /* -2 stops */
+  --color-neutral-secondary-disabled:var(--neutral-900);
+
+  /* ACCENT PRIMARY — bright, high importance                    */
+  --color-accent-primary:            var(--accent-300);
+  --color-accent-primary-hover:      var(--accent-200);   /* -1 stop ≈ 4% Δ */
+  --color-accent-primary-pressed:    var(--accent-100);   /* -2 stops */
+  --color-accent-primary-focus:      var(--accent-300);
+  --color-accent-primary-disabled:   var(--accent-700);
+  --color-accent-secondary:          var(--accent-800);
+  --color-accent-secondary-hover:    var(--accent-700);   /* -1 stop */
+  --color-accent-secondary-pressed:  var(--accent-600);   /* -2 stops */
+  --color-accent-secondary-disabled: var(--accent-900);
+  --color-accent-active:             var(--accent-300);
+  --color-accent-active-text:        var(--neutral-950);
+  --color-accent-progress:           var(--accent-300);
+  --color-accent-indicator:          var(--accent-400);
+
+  /* BRAND PRIMARY — mid brightness, mid importance              */
+  --color-brand-primary:             var(--brand-400);
+  --color-brand-primary-hover:       var(--brand-300);    /* -1 stop ≈ 4% Δ */
+  --color-brand-primary-pressed:     var(--brand-200);    /* -2 stops */
+  --color-brand-primary-focus:       var(--brand-400);
+  --color-brand-primary-disabled:    var(--brand-700);
+  --color-brand-secondary:           var(--brand-800);
+  --color-brand-secondary-hover:     var(--brand-700);    /* -1 stop */
+  --color-brand-secondary-pressed:   var(--brand-600);    /* -2 stops */
+  --color-brand-secondary-disabled:  var(--brand-900);
+}
+
+
+/* ============================================================
+   AUTO MODE  (.auto class — follows OS preference)
+   ============================================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root.auto {
+    --color-chart-1:  oklch(0.72 0.14 0);
+    --color-chart-2:  oklch(0.72 0.14 30);
+    --color-chart-3:  oklch(0.72 0.14 60);
+    --color-chart-4:  oklch(0.72 0.14 90);
+    --color-chart-5:  oklch(0.72 0.14 120);
+    --color-chart-6:  oklch(0.72 0.14 150);
+    --color-chart-7:  oklch(0.72 0.14 180);
+    --color-chart-8:  oklch(0.72 0.14 210);
+    --color-chart-9:  oklch(0.72 0.14 240);
+    --color-chart-10: oklch(0.72 0.14 270);
+    --color-chart-11: oklch(0.72 0.14 300);
+    --color-chart-12: oklch(0.72 0.14 330);
+    --color-base-primary:              var(--neutral-950);
+    --color-base-secondary:            var(--neutral-900);
+    --color-base-tertiary:             var(--neutral-800);
+    --color-surface-primary:           var(--brand-900);
+    --color-surface-secondary:         var(--brand-800);
+    --color-surface-tertiary:          var(--brand-700);
+    --color-surface-brand:             var(--brand-950);
+    --color-surface-brand-strong:      var(--brand-950);
+    --color-surface-accent:            var(--accent-950);
+    --color-surface-accent-strong:     var(--accent-900);
+    --color-neutral-subtle:            var(--neutral-600);
+    --color-text-strong:               var(--neutral-50);
+    --color-text-primary:              var(--neutral-100);
+    --color-text-secondary:            var(--neutral-300);
+    --color-text-tertiary:             var(--neutral-500);
+    --color-text-weak:                 var(--neutral-600);
+    --color-text-weakest:              var(--neutral-700);
+    --color-text-placeholder:          var(--neutral-500);
+    --color-text-disabled:             var(--neutral-600);
+    --color-text-on-brand:             var(--neutral-100);
+    --color-text-on-accent:            var(--neutral-950);
+    --color-text-on-neutral:           var(--neutral-950);
+    --color-text-on-dark:              var(--neutral-50);
+    --color-text-brand:                var(--brand-300);
+    --color-text-brand-hover:          var(--brand-200);
+    --color-text-brand-pressed:        var(--brand-100);
+    --color-text-accent:               var(--accent-300);
+    --color-text-accent-hover:         var(--accent-200);
+    --color-text-accent-pressed:       var(--accent-100);
+    --color-icon-primary:              var(--neutral-200);
+    --color-icon-secondary:            var(--neutral-400);
+    --color-icon-tertiary:             var(--neutral-600);
+    --color-icon-weak:                 var(--neutral-700);
+    --color-icon-disabled:             var(--neutral-700);
+    --color-icon-brand:                var(--brand-300);
+    --color-icon-brand-hover:          var(--brand-200);
+    --color-icon-brand-pressed:        var(--brand-100);
+    --color-icon-on-brand:             var(--neutral-950);
+    --color-icon-accent:               var(--accent-300);
+    --color-icon-accent-hover:         var(--accent-200);
+    --color-icon-accent-pressed:       var(--accent-100);
+    --color-icon-on-accent:            var(--neutral-950);
+    --color-icon-on-neutral:           var(--neutral-950);
+    --color-border-strong:             var(--neutral-600);
+    --color-border-primary:            var(--neutral-700);
+    --color-border-secondary:          var(--neutral-800);
+    --color-border-weak:               var(--neutral-800);
+    --color-border-weakest:            var(--neutral-900);
+    --color-border-disabled:           var(--neutral-700);
+    --color-border-brand:              var(--brand-700);
+    --color-border-brand-hover:        var(--brand-600);
+    --color-border-focus:              var(--accent-400);
+    --color-border-accent:             var(--accent-600);
+    --color-border-accent-hover:       var(--accent-500);
+    --color-neutral-primary:           var(--neutral-100);
+    --color-neutral-primary-hover:     var(--neutral-50);
+    --color-neutral-primary-pressed:   var(--neutral-50);
+    --color-neutral-primary-disabled:  var(--neutral-700);
+    --color-neutral-secondary:         var(--neutral-800);
+    --color-neutral-secondary-hover:   var(--neutral-700);
+    --color-neutral-secondary-pressed: var(--neutral-600);
+    --color-neutral-secondary-disabled:var(--neutral-900);
+    --color-accent-primary:            var(--accent-300);
+    --color-accent-primary-hover:      var(--accent-200);
+    --color-accent-primary-pressed:    var(--accent-100);
+    --color-accent-primary-focus:      var(--accent-300);
+    --color-accent-primary-disabled:   var(--accent-700);
+    --color-accent-secondary:          var(--accent-800);
+    --color-accent-secondary-hover:    var(--accent-700);
+    --color-accent-secondary-pressed:  var(--accent-600);
+    --color-accent-secondary-disabled: var(--accent-900);
+    --color-accent-active:             var(--accent-300);
+    --color-accent-active-text:        var(--neutral-950);
+    --color-accent-progress:           var(--accent-300);
+    --color-accent-indicator:          var(--accent-400);
+    --color-brand-primary:             var(--brand-400);
+    --color-brand-primary-hover:       var(--brand-300);
+    --color-brand-primary-pressed:     var(--brand-200);
+    --color-brand-primary-focus:       var(--brand-400);
+    --color-brand-primary-disabled:    var(--brand-700);
+    --color-brand-secondary:           var(--brand-800);
+    --color-brand-secondary-hover:     var(--brand-700);
+    --color-brand-secondary-pressed:   var(--brand-600);
+    --color-brand-secondary-disabled:  var(--brand-900);
+  }
+}
+
+
+/* ============================================================
+   COMPONENT TOKENS  (formerly elements.css)
+   Final export layer — what components consume directly.
+   Every token is a thin alias of a --color-* semantic var.
+   This layer never changes; swap theme/mode on <html>.
+
+   TOKEN ANATOMY
+   ─────────────
+   --[element]-[semantic]-[hierarchy][-state]
+
+   Elements:   base · surface · text · icon · border · interactive
+   Semantics:  accent · brand · neutral · success · warning · danger · info
+   Hierarchy:  primary · secondary · tertiary · strong · weak
+               weakest · placeholder · active · progress · indicator
+   States:     (default) · hover · pressed · focus · disabled
+   ============================================================ */
+
+
+/* ┌─────────────────────────────────────────────────────────┐
+   │  BASE  (60% — neutral canvas)                           │
+   └─────────────────────────────────────────────────────────┘ */
+
+:root {
+  --base-primary:                     var(--color-base-primary);
+  --base-secondary:                   var(--color-base-secondary);
+  --base-tertiary:                    var(--color-base-tertiary);
+}
+
+
+/* ┌─────────────────────────────────────────────────────────┐
+   │  SURFACE  (15% — tinted panels and cards)               │
+   └─────────────────────────────────────────────────────────┘ */
+
+:root {
+  /* neutral surfaces */
+  --surface-primary:                  var(--color-surface-primary);
+  --surface-secondary:                var(--color-surface-secondary);
+  --surface-tertiary:                 var(--color-surface-tertiary);
+  /* brand-tinted surfaces */
+  --surface-brand:                    var(--color-surface-brand);
+  --surface-brand-strong:             var(--color-surface-brand-strong);
+  /* accent-tinted surfaces (active panels, selected cards)    */
+  --surface-accent:                   var(--color-surface-accent);
+  --surface-accent-strong:            var(--color-surface-accent-strong);
+  /* neutral subtle — mid-tone fill for chips, badges, tags    */
+  --neutral-subtle:                   var(--color-neutral-subtle);
+  /* intent surfaces */
+  --surface-success:                  var(--color-intent-success-weakest);
+  --surface-success-strong:           var(--color-intent-success-weak);
+  --surface-warning:                  var(--color-intent-warning-weakest);
+  --surface-warning-strong:           var(--color-intent-warning-weak);
+  --surface-danger:                   var(--color-intent-danger-weakest);
+  --surface-danger-strong:            var(--color-intent-danger-weak);
+  --surface-info:                     var(--color-intent-info-weakest);
+  --surface-info-strong:              var(--color-intent-info-weak);
+}
+
+
+/* ┌─────────────────────────────────────────────────────────┐
+   │  TEXT                                                   │
+   └─────────────────────────────────────────────────────────┘ */
+
+:root {
+  /* neutral hierarchy */
+  --text-strong:                      var(--color-text-strong);
+  --text-primary:                     var(--color-text-primary);
+  --text-secondary:                   var(--color-text-secondary);
+  --text-tertiary:                    var(--color-text-tertiary);
+  --text-weak:                        var(--color-text-weak);
+  --text-weakest:                     var(--color-text-weakest);
+  --text-placeholder:                 var(--color-text-placeholder);
+  --text-disabled:                    var(--color-text-disabled);
+  /* text on colored fills */
+  --text-on-brand:                    var(--color-text-on-brand);
+  --text-on-accent:                   var(--color-text-on-accent);
+  --text-on-neutral:                  var(--color-text-on-neutral);
+  --text-on-dark:                     var(--color-text-on-dark);
+  /* brand-colored text — identity labels */
+  --text-brand:                       var(--color-text-brand);
+  --text-brand-hover:                 var(--color-text-brand-hover);
+  --text-brand-pressed:               var(--color-text-brand-pressed);
+  /* accent-colored text — links, active labels, CTA text */
+  --text-accent:                      var(--color-text-accent);
+  --text-accent-hover:                var(--color-text-accent-hover);
+  --text-accent-pressed:              var(--color-text-accent-pressed);
+  /* intent text */
+  --text-success:                     var(--color-intent-success-text);
+  --text-warning:                     var(--color-intent-warning-text);
+  --text-danger:                      var(--color-intent-danger-text);
+  --text-info:                        var(--color-intent-info-text);
+  --text-on-success:                  var(--color-intent-success-text-on);
+  --text-on-warning:                  var(--color-intent-warning-text-on);
+  --text-on-danger:                   var(--color-intent-danger-text-on);
+  --text-on-info:                     var(--color-intent-info-text-on);
+
+  /* role text */
+  --text-role-op:                     var(--color-text-role-op);
+  --text-role-admin:                  var(--color-text-role-admin);
+  --text-role-moderator:              var(--color-text-role-moderator);
+  --text-role-expert:                 var(--color-text-role-expert);
+}
+
+
+/* ┌─────────────────────────────────────────────────────────┐
+   │  ICON                                                   │
+   └─────────────────────────────────────────────────────────┘ */
+
+:root {
+  /* neutral */
+  --icon-primary:                     var(--color-icon-primary);
+  --icon-secondary:                   var(--color-icon-secondary);
+  --icon-tertiary:                    var(--color-icon-tertiary);
+  --icon-weak:                        var(--color-icon-weak);
+  --icon-disabled:                    var(--color-icon-disabled);
+  /* brand icons */
+  --icon-brand:                       var(--color-icon-brand);
+  --icon-brand-hover:                 var(--color-icon-brand-hover);
+  --icon-brand-pressed:               var(--color-icon-brand-pressed);
+  --icon-on-brand:                    var(--color-icon-on-brand);
+  /* accent icons — indicators, status, active state           */
+  --icon-accent:                      var(--color-icon-accent);
+  --icon-accent-hover:                var(--color-icon-accent-hover);
+  --icon-accent-pressed:              var(--color-icon-accent-pressed);
+  --icon-on-accent:                   var(--color-icon-on-accent);
+  --icon-on-neutral:                  var(--color-icon-on-neutral);
+  /* intent icons */
+  --icon-success:                     var(--color-intent-success-icon);
+  --icon-warning:                     var(--color-intent-warning-icon);
+  --icon-danger:                      var(--color-intent-danger-icon);
+  --icon-info:                        var(--color-intent-info-icon);
+}
+
+
+/* ┌─────────────────────────────────────────────────────────┐
+   │  BORDER                                                 │
+   └─────────────────────────────────────────────────────────┘ */
+
+:root {
+  /* neutral */
+  --border-strong:                    var(--color-border-strong);
+  --border-primary:                   var(--color-border-primary);
+  --border-secondary:                 var(--color-border-secondary);
+  --border-weak:                      var(--color-border-weak);
+  --border-weakest:                   var(--color-border-weakest);
+  --border-disabled:                  var(--color-border-disabled);
+  /* brand */
+  --border-brand:                     var(--color-border-brand);
+  --border-brand-hover:               var(--color-border-brand-hover);
+  /* accent — focus rings, active outlines                     */
+  --border-focus:                     var(--color-border-focus);
+  --border-accent:                    var(--color-border-accent);
+  --border-accent-hover:              var(--color-border-accent-hover);
+  /* intent */
+  --border-success:                   var(--color-intent-success-border);
+  --border-warning:                   var(--color-intent-warning-border);
+  --border-danger:                    var(--color-intent-danger-border);
+  --border-info:                      var(--color-intent-info-border);
+}
+
+
+/* ┌─────────────────────────────────────────────────────────┐
+   │  INTERACTIVE                                            │
+   └─────────────────────────────────────────────────────────┘ */
+
+:root {
+  /* ── NEUTRAL (most important — darkest light / lightest dark) ── */
+  --interactive-neutral-primary:             var(--color-neutral-primary);
+  --interactive-neutral-primary-hover:       var(--color-neutral-primary-hover);
+  --interactive-neutral-primary-pressed:     var(--color-neutral-primary-pressed);
+  --interactive-neutral-primary-disabled:    var(--color-neutral-primary-disabled);
+  --interactive-neutral-secondary:           var(--color-neutral-secondary);
+  --interactive-neutral-secondary-hover:     var(--color-neutral-secondary-hover);
+  --interactive-neutral-secondary-pressed:   var(--color-neutral-secondary-pressed);
+  --interactive-neutral-secondary-disabled:  var(--color-neutral-secondary-disabled);
+
+  /* ── ACCENT (high importance — dark light / bright dark) ────── */
+  --interactive-accent-primary:              var(--color-accent-primary);
+  --interactive-accent-primary-hover:        var(--color-accent-primary-hover);
+  --interactive-accent-primary-pressed:      var(--color-accent-primary-pressed);
+  --interactive-accent-primary-focus:        var(--color-accent-primary-focus);
+  --interactive-accent-primary-disabled:     var(--color-accent-primary-disabled);
+  --interactive-accent-secondary:            var(--color-accent-secondary);
+  --interactive-accent-secondary-hover:      var(--color-accent-secondary-hover);
+  --interactive-accent-secondary-pressed:    var(--color-accent-secondary-pressed);
+  --interactive-accent-secondary-disabled:   var(--color-accent-secondary-disabled);
+  /* active/selected state (nav items, tabs, segments)         */
+  --interactive-accent-active:               var(--color-accent-active);
+  --interactive-accent-active-text:          var(--color-accent-active-text);
+  /* progress bars and step indicators                         */
+  --interactive-accent-progress:             var(--color-accent-progress);
+  /* status dots, badges, notification pips                    */
+  --interactive-accent-indicator:            var(--color-accent-indicator);
+
+  /* ── BRAND (mid importance — medium brightness both modes) ─── */
+  --interactive-brand-primary:               var(--color-brand-primary);
+  --interactive-brand-primary-hover:         var(--color-brand-primary-hover);
+  --interactive-brand-primary-pressed:       var(--color-brand-primary-pressed);
+  --interactive-brand-primary-focus:         var(--color-brand-primary-focus);
+  --interactive-brand-primary-disabled:      var(--color-brand-primary-disabled);
+  --interactive-brand-secondary:             var(--color-brand-secondary);
+  --interactive-brand-secondary-hover:       var(--color-brand-secondary-hover);
+  --interactive-brand-secondary-pressed:     var(--color-brand-secondary-pressed);
+  --interactive-brand-secondary-disabled:    var(--color-brand-secondary-disabled);
+
+  /* ── INTENT ──────────────────────────────────────────────── */
+  --interactive-success:                     var(--color-intent-success);
+  --interactive-success-hover:               var(--color-intent-success-hover);
+  --interactive-success-pressed:             var(--color-intent-success-pressed);
+  --interactive-success-disabled:            var(--color-intent-success-disabled);
+  --interactive-warning:                     var(--color-intent-warning);
+  --interactive-warning-hover:               var(--color-intent-warning-hover);
+  --interactive-warning-pressed:             var(--color-intent-warning-pressed);
+  --interactive-warning-disabled:            var(--color-intent-warning-disabled);
+  --interactive-danger:                      var(--color-intent-danger);
+  --interactive-danger-hover:                var(--color-intent-danger-hover);
+  --interactive-danger-pressed:              var(--color-intent-danger-pressed);
+  --interactive-danger-disabled:             var(--color-intent-danger-disabled);
+  --interactive-info:                        var(--color-intent-info);
+  --interactive-info-hover:                  var(--color-intent-info-hover);
+  --interactive-info-pressed:                var(--color-intent-info-pressed);
+  --interactive-info-disabled:               var(--color-intent-info-disabled);
+}
+
+
+/* ┌─────────────────────────────────────────────────────────┐
+   │  CHART — OKLCH perceptually uniform data visualization  │
+   └─────────────────────────────────────────────────────────┘ */
+
+:root {
+  --chart-1:  var(--color-chart-1);   /* red */
+  --chart-2:  var(--color-chart-2);   /* orange */
+  --chart-3:  var(--color-chart-3);   /* yellow */
+  --chart-4:  var(--color-chart-4);   /* lime */
+  --chart-5:  var(--color-chart-5);   /* green */
+  --chart-6:  var(--color-chart-6);   /* teal */
+  --chart-7:  var(--color-chart-7);   /* cyan */
+  --chart-8:  var(--color-chart-8);   /* sky */
+  --chart-9:  var(--color-chart-9);   /* blue */
+  --chart-10: var(--color-chart-10);  /* indigo */
+  --chart-11: var(--color-chart-11);  /* purple */
+  --chart-12: var(--color-chart-12);  /* magenta */
+}
+
+
+/* ============================================================
+   USAGE REFERENCE
+   ───────────────
+   Page canvas:     background: var(--base-primary);
+   Card:            background: var(--surface-primary);
+                    border: 1px solid var(--border-primary);
+   Body text:       color: var(--text-primary);
+   Muted text:      color: var(--text-secondary);
+   Placeholder:     color: var(--text-placeholder);
+   Accent text:     color: var(--text-accent);
+   Brand text:      color: var(--text-brand);
+   Divider:         border-top: 1px solid var(--border-weak);
+
+   Most important button (neutral-primary):
+     background: var(--interactive-neutral-primary);
+     color:      var(--text-on-neutral);
+   :hover    → var(--interactive-neutral-primary-hover)
+   :active   → var(--interactive-neutral-primary-pressed)
+
+   Primary CTA (accent-primary):
+     background: var(--interactive-accent-primary);
+     color:      var(--text-on-accent);
+   :hover    → var(--interactive-accent-primary-hover)
+   :active   → var(--interactive-accent-primary-pressed)
+   :focus    → outline: 2px solid var(--border-focus)
+   :disabled → var(--interactive-accent-primary-disabled)
+               + color: var(--text-disabled)
+
+   Secondary CTA / brand button:
+     background: var(--interactive-brand-primary);
+     color:      var(--text-on-brand);
+
+   Active nav item:
+     background: var(--interactive-accent-active);
+     color:      var(--interactive-accent-active-text);
+
+   Progress bar:    background: var(--interactive-accent-progress);
+   Status dot:      background: var(--interactive-accent-indicator);
+   Input focus:     border-color: var(--border-focus);
+                    outline: 2px solid var(--border-focus);
+
+   Accent-tinted selected card:
+     background: var(--surface-accent);
+     border: 1px solid var(--border-accent);
+
+   Chart colors (pass to Chart.js, Recharts, D3):
+     colors: [
+       'var(--chart-1)', 'var(--chart-2)', 'var(--chart-3)',
+       'var(--chart-4)', 'var(--chart-5)', 'var(--chart-6)',
+       'var(--chart-7)', 'var(--chart-8)', 'var(--chart-9)',
+       'var(--chart-10)', 'var(--chart-11)', 'var(--chart-12)'
+     ]
+   ============================================================ */

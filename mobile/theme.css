@@ -1,0 +1,52 @@
+/* For Expo web / NativeWind CSS vars alignment */
+:root {
+  --color-primary: 255 255 255;
+  --color-bg: 255 255 255;
+  --color-text: 17 17 17;
+  --color-secondary: 105 114 84;
+  --color-accent: 118 143 56;
+  --color-neutral-0: 255 255 255;
+  --color-neutral-10: 209 209 209;
+  --color-neutral-20: 138 138 138;
+  --color-neutral-30: 58 58 58;
+  --color-neutral-40: 17 17 17;
+  --color-success: 111 163 90;
+  --color-success-hover: 90 138 71;
+  --color-warning: 224 166 58;
+  --color-warning-hover: 200 146 46;
+  --color-danger: 197 83 74;
+  --color-danger-hover: 168 68 60;
+}
+
+:root.dark {
+  --color-primary: 25 25 25;
+  --color-bg: 13 13 13;
+  --color-text: 245 245 245;
+  --color-neutral-0: 13 13 13;
+  --color-neutral-10: 50 50 50;
+  --color-neutral-20: 100 100 100;
+  --color-neutral-30: 180 180 180;
+  --color-neutral-40: 245 245 245;
+  --color-secondary: 140 155 110;
+  --color-accent: 160 190 80;
+  --color-success: 130 180 110;
+  --color-success-hover: 110 160 90;
+  --color-warning: 255 190 80;
+  --color-warning-hover: 240 170 60;
+  --color-danger: 230 120 110;
+  --color-danger-hover: 210 100 90;
+}
+
+:root.theme2 {
+  --color-primary: 30 33 36;
+  --color-bg: 30 33 36;
+  --color-text: 255 255 255;
+  --color-secondary: 52 61 70;
+  --color-accent: 166 95 95;
+}
+
+:root.theme2.dark {
+  --color-bg: 17 17 17;
+  --color-text: 255 255 255;
+  --color-secondary: 186 115 115;
+}

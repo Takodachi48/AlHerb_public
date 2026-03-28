@@ -1,0 +1,56 @@
+/* Status Card Container Styles */
+.status-card {
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-secondary);
+  border-radius: 6px;
+  padding: 0.875rem 1.375rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  transition: all 0.3s ease;
+}
+
+.status-card.on {
+  border-color: #f98234;
+}
+
+/* Status Card Children Styles */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 6px;
+  background: var(--text-tertiary);
+  flex-shrink: 0;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.status-card.on .dot {
+  background: #f48120;
+  box-shadow: 0 0 8px rgba(244, 129, 32, 0.65);
+}
+
+.status-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  transition: color 0.4s ease;
+}
+
+.status-card.on .status-text {
+  color: var(--text-primary);
+}
+
+.status-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-left: auto;
+  transition: color 0.4s ease;
+  letter-spacing: 0.03em;
+}
+
+.status-card.on .status-sub {
+  color: var(--text-secondary);
+}
+
+

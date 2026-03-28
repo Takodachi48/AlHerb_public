@@ -1,0 +1,162 @@
+/* ══════════════════════════════════════════════════════════════
+   HERBS PAGE
+══════════════════════════════════════════════════════════════ */
+
+/* ── Page root removed (empty) ── */
+
+/* ══════════════════════════════════════════════════════════════
+   CONTENT AREA
+══════════════════════════════════════════════════════════════ */
+.hp-content {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 24px 24px 56px;
+}
+
+@media (max-width: 640px) {
+  .hp-content {
+    padding: 16px 16px 48px;
+  }
+}
+
+/* ── Results / page meta strip ── */
+.hp-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.hp-meta-count,
+.hp-meta-page {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* ── Herb grid ── */
+.hp-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .hp-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .hp-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── Pagination ── */
+.hp-pagination {
+  margin-top: 32px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EMPTY STATE
+══════════════════════════════════════════════════════════════ */
+.hp-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 72px 24px;
+  text-align: center;
+}
+
+.hp-empty-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-secondary);
+  border: 1.5px solid var(--border-primary);
+  border-left: 3px solid var(--border-weak);
+  border-radius: 6px;
+  color: var(--text-tertiary);
+  margin-bottom: 16px;
+}
+
+.hp-empty-title {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+}
+
+.hp-empty-sub {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ERROR STATE
+══════════════════════════════════════════════════════════════ */
+.hp-error-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.hp-error-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 36px 28px;
+  max-width: 360px;
+  width: 100%;
+  background: var(--surface-primary);
+  border: 1.5px solid var(--border-primary);
+  border-left: 3px solid var(--border-danger);
+  border-radius: 6px;
+  box-shadow: 4px 4px 0 var(--surface-tertiary);
+}
+
+.hp-error-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-danger);
+  border: 1.5px solid var(--border-danger);
+  border-radius: 6px;
+  color: var(--icon-danger);
+  margin-bottom: 4px;
+}
+
+.hp-error-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--icon-danger);
+  margin: 0;
+}
+
+.hp-error-msg {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0 0 4px;
+}

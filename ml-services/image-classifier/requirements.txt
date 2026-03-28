@@ -1,0 +1,13 @@
+fastapi>=0.110.0
+uvicorn>=0.31.0
+torch>=2.2.0
+torchvision>=0.16.1
+timm==0.9.12
+celery==5.3.6
+redis==5.0.1
+cloudinary==1.36.0
+pydantic-settings>=2.5.2
+pillow>=10.1.0
+requests>=2.31.0
+python-multipart>=0.0.9
+anyio>=4.5.0

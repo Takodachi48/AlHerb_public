@@ -1,0 +1,112 @@
+{
+  "name": "herbal-medicine-server",
+  "version": "1.0.0",
+  "description": "Backend API for Herbal Medicine Recommendation System",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "seed": "node scripts/seed.js",
+    "migrate": "node scripts/migrate.js",
+    "import:locations": "node scripts/import-locations.js",
+    "import:herbs": "node scripts/import-herbs.js",
+    "import:phytochemicals": "node scripts/import-phytochemicals.js",
+    "import:symptoms": "node scripts/import-symptoms.js",
+    "import:safety": "node scripts/import-herb-safety.js",
+    "import:contraindications": "node scripts/import-contraindications.js",
+    "import:interactions": "node scripts/import-herb-interactions.js",
+    "migrate:herb-refs": "node scripts/migrate-herb-ref-types.js"
+  },
+  "keywords": [
+    "herbal-medicine",
+    "recommendation",
+    "nodejs",
+    "express",
+    "mongodb",
+    "firebase"
+  ],
+  "author": "Herbal Medicine Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "bad-words": "^4.0.0",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.9.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "expo-server-sdk": "^6.0.0",
+    "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.0.1",
+    "firebase-admin": "^12.0.0",
+    "helmet": "^7.1.0",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "meilisearch": "^0.47.0",
+    "mongoose": "^8.0.3",
+    "multer": "^1.4.5-lts.1",
+    "node-cache": "^5.1.2",
+    "nodemailer": "7.0.13",
+    "pdf-lib": "^1.17.1",
+    "sanitize-html": "^2.13.1",
+    "sharp": "^0.33.1",
+    "uuid": "^11.1.0",
+    "winston": "^3.11.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.8",
+    "eslint": "^8.55.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2",
+    "supertest": "^6.3.3",
+    "xlsx": "^0.18.5"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^expo-server-sdk$": "<rootDir>/src/__mocks__/expo-server-sdk.js"
+    },
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/index.js"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ]
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es2022": true,
+      "jest": true
+    },
+    "parserOptions": {
+      "ecmaVersion": "latest"
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "rules": {
+      "linebreak-style": "off",
+      "no-console": "warn",
+      "no-unused-vars": "warn",
+      "no-useless-escape": "off",
+      "no-prototype-builtins": "off"
+    }
+  }
+}

@@ -1,0 +1,287 @@
+/* ══════════════════════════════════════════════════════════════
+   map.css  — InteractiveMap marker design system
+   Depends on: semantics.css (token layer must load first)
+
+   Contents
+   ────────
+   1.  Location pin markers  (.map-marker)
+   2.  Per-type colour rules  (.map-marker--{type})
+   3.  Cluster markers        (.map-cluster)
+   4.  Cluster tier colours   (.map-cluster--{sm|md|lg|xl})
+   5.  User location dot      (.map-user-dot)
+   6.  Search radius circle   (.map-radius-circle)
+   7.  Leaflet tooltip reset
+══════════════════════════════════════════════════════════════ */
+
+
+/* ── 1. Location pin markers ─────────────────────────────────
+   Anatomy:  circular body (32×32) + downward triangular tail
+   The body colour is set per-type in section 2.
+   All colours reference tokens — zero hardcoded values.
+──────────────────────────────────────────────────────────── */
+
+.map-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.22));
+  transition: filter 200ms cubic-bezier(0.4, 0, 0.2, 1),
+              transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  /* Leaflet stacking */
+  will-change: transform;
+}
+
+.map-marker:hover {
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.32));
+  transform: translateY(-2px);
+}
+
+.map-marker--selected {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.38));
+  transform: translateY(-3px) scale(1.1);
+  z-index: 900 !important;
+}
+
+/* Body — circular badge */
+.map-marker__body {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  transition: border-color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.map-marker--selected .map-marker__body {
+  border-color: rgba(255, 255, 255, 0.92);
+  border-width: 2.5px;
+}
+
+/* Tail — CSS-only triangle, colour matched to body via per-type rules */
+.map-marker__tail {
+  width: 0;
+  height: 0;
+  border-left:  5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top-width: 7px;
+  border-top-style: solid;
+  margin-top: -1px;
+  flex-shrink: 0;
+}
+
+/* Icon — inherits currentColor from body background context */
+.map-marker__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  color: #fff;                 /* default; overridden per-type below */
+}
+
+
+/* ── 2. Per-type colour rules ────────────────────────────────
+   Matches LOCATION_TYPES = ['market', 'foraging', 'shop', 'pharmacy', 'clinic']
+   Each type sets body background + tail border-top-color (must match).
+   Selected variants step to the -pressed token.
+──────────────────────────────────────────────────────────── */
+
+/* market — accent warm (palengke / public market) */
+.map-marker--market .map-marker__body             { background: var(--interactive-accent-primary); }
+.map-marker--market .map-marker__tail             { border-top-color: var(--interactive-accent-primary); }
+.map-marker--market.map-marker--selected .map-marker__body { background: var(--interactive-accent-primary-pressed); }
+.map-marker--market.map-marker--selected .map-marker__tail { border-top-color: var(--interactive-accent-primary-pressed); }
+.map-marker--market .map-marker__icon             { color: var(--icon-on-accent); }
+
+/* foraging — brand green (wild herb site) */
+.map-marker--foraging .map-marker__body           { background: var(--interactive-brand-primary); }
+.map-marker--foraging .map-marker__tail           { border-top-color: var(--interactive-brand-primary); }
+.map-marker--foraging.map-marker--selected .map-marker__body { background: var(--interactive-brand-primary-pressed); }
+.map-marker--foraging.map-marker--selected .map-marker__tail { border-top-color: var(--interactive-brand-primary-pressed); }
+.map-marker--foraging .map-marker__icon           { color: var(--icon-on-brand); }
+
+/* shop — success green (herbal retail shop) */
+.map-marker--shop .map-marker__body               { background: var(--interactive-success); }
+.map-marker--shop .map-marker__tail               { border-top-color: var(--interactive-success); }
+.map-marker--shop.map-marker--selected .map-marker__body { background: var(--interactive-success-pressed); }
+.map-marker--shop.map-marker--selected .map-marker__tail { border-top-color: var(--interactive-success-pressed); }
+.map-marker--shop .map-marker__icon               { color: var(--text-on-success); }
+
+/* pharmacy — warning amber (botika / herbal pharmacy) */
+.map-marker--pharmacy .map-marker__body           { background: var(--interactive-warning); }
+.map-marker--pharmacy .map-marker__tail           { border-top-color: var(--interactive-warning); }
+.map-marker--pharmacy.map-marker--selected .map-marker__body { background: var(--interactive-warning-pressed); }
+.map-marker--pharmacy.map-marker--selected .map-marker__tail { border-top-color: var(--interactive-warning-pressed); }
+.map-marker--pharmacy .map-marker__icon           { color: var(--text-on-warning); }
+
+/* clinic — info blue (traditional medicine clinic) */
+.map-marker--clinic .map-marker__body             { background: var(--interactive-info); }
+.map-marker--clinic .map-marker__tail             { border-top-color: var(--interactive-info); }
+.map-marker--clinic.map-marker--selected .map-marker__body { background: var(--interactive-info-pressed); }
+.map-marker--clinic.map-marker--selected .map-marker__tail { border-top-color: var(--interactive-info-pressed); }
+.map-marker--clinic .map-marker__icon             { color: var(--text-on-info); }
+
+/* default / unknown */
+.map-marker--default .map-marker__body            { background: var(--interactive-neutral-secondary); }
+.map-marker--default .map-marker__tail            { border-top-color: var(--interactive-neutral-secondary); }
+.map-marker--default.map-marker--selected .map-marker__body { background: var(--interactive-neutral-secondary-pressed); }
+.map-marker--default.map-marker--selected .map-marker__tail { border-top-color: var(--interactive-neutral-secondary-pressed); }
+.map-marker--default .map-marker__icon            { color: var(--icon-on-neutral); }
+
+
+/* ── 3. Cluster markers ──────────────────────────────────────
+   Circular badge with a count label.
+   Size grows with tier: 34 → 38 → 42 → 46px (set inline in JS).
+   Colour darkens with tier (section 4).
+──────────────────────────────────────────────────────────── */
+
+.map-cluster {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+              filter  200ms cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.18));
+}
+
+.map-cluster:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 3px 9px rgba(0, 0, 0, 0.28));
+}
+
+.map-cluster__count {
+  font-family: var(--font-mono);
+  font-size: var(--text-label-size);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+
+/* ── 4. Cluster tier colours ─────────────────────────────────
+   sm  < 10  → palest brand surface   text: text-brand
+   md  < 50  → brand-secondary fill   text: on-brand (light)
+   lg  < 200 → brand-primary fill     text: on-brand (light)
+   xl  ≥ 200 → brand-primary-pressed  text: on-brand (light)
+──────────────────────────────────────────────────────────── */
+
+.map-cluster--sm {
+  background: var(--surface-brand);
+  border-color: var(--border-brand);
+}
+.map-cluster--sm .map-cluster__count {
+  color: var(--text-brand);
+}
+
+.map-cluster--md {
+  background: var(--interactive-brand-secondary);
+  border-color: var(--interactive-brand-primary);
+}
+.map-cluster--md .map-cluster__count {
+  color: var(--text-on-brand);
+}
+
+.map-cluster--lg {
+  background: var(--interactive-brand-primary);
+  border-color: var(--interactive-brand-primary-pressed);
+}
+.map-cluster--lg .map-cluster__count {
+  color: var(--text-on-brand);
+}
+
+.map-cluster--xl {
+  background: var(--interactive-brand-primary-pressed);
+  border-color: rgba(0, 0, 0, 0.18);
+}
+.map-cluster--xl .map-cluster__count {
+  color: var(--text-on-brand);
+}
+
+
+/* ── 5. User location dot ────────────────────────────────────
+   Layered rings: solid core + fading pulse halo.
+   Uses info-blue to distinguish from location markers.
+   Pulse animation respects reduced-motion preference.
+──────────────────────────────────────────────────────────── */
+
+.map-user-dot {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.map-user-dot__core {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--interactive-info);
+  border: 2.5px solid var(--base-primary);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+.map-user-dot__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--interactive-info);
+  opacity: 0.35;
+  animation: map-user-pulse 2s ease-out infinite;
+  z-index: 1;
+}
+
+@keyframes map-user-pulse {
+  0%   { transform: scale(1); opacity: 0.35; }
+  70%  { transform: scale(2); opacity: 0;    }
+  100% { transform: scale(2); opacity: 0;    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-user-dot__pulse {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+
+/* ── 6. Search radius circle ─────────────────────────────────
+   Leaflet's Circle renders as an SVG <path> inside
+   .leaflet-overlay-pane. We target it via the className we set
+   in RADIUS_CIRCLE_OPTIONS. CSS vars work here because the SVG
+   is inline in the document (not an <img> or cross-origin).
+──────────────────────────────────────────────────────────── */
+
+.map-radius-circle path {
+  stroke:         var(--border-brand)  !important;
+  stroke-width:   1.5px                !important;
+  stroke-dasharray: 6 4                !important;
+  stroke-opacity: 0.65                 !important;
+  fill:           var(--surface-brand) !important;
+  fill-opacity:   0.07                 !important;
+}
+
+
+/* ── 7. Leaflet tooltip reset ────────────────────────────────
+   Override Leaflet's default white-box tooltip to match the
+   system design — square corners, system border, system type.
+──────────────────────────────────────────────────────────── */
+
+.leaflet-tooltip {
+  background:   var(--surface-primary) !important;
+  border:       1.5px solid var(--border-primary) !important;
+  border-radius: 0 !important;
+  box-shadow:   none !important;
+  font-family:  var(--font-core) !important;
+  font-size:    var(--text-small-size) !important;
+  color:        var(--text-primary) !important;
+  padding:      4px 8px !important;
+}
+.leaflet-tooltip::before {
+  border-top-color: var(--border-primary) !important;
+}
