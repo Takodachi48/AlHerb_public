@@ -32,7 +32,7 @@
     {
       "label": "ML: Start Image Classifier",
       "type": "shell",
-      "command": "PYTHONPATH=src python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000",
+      "command": "source .venv/bin/activate && PYTHONPATH=src python -m uvicorn app.main:app --host 0.0.0.0 --port 8000",
       "options": {
         "cwd": "${workspaceFolder}/ml-services/image-classifier"
       },
@@ -45,7 +45,7 @@
     {
       "label": "ML: Start Recommendation Engine",
       "type": "shell",
-      "command": "python3 src/main.py",
+      "command": "source .venv/bin/activate && python src/main.py",
       "options": {
         "cwd": "${workspaceFolder}/ml-services/recommendation-engine"
       },
