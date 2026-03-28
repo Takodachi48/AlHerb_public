@@ -6,7 +6,7 @@ This guide will help you set up and run the AlgoHerbarium application locally fo
 
 **It's highly recommended to open this project in VS Code** to use the built-in tasks that can start all services with one command. This is the easiest way to get everything running simultaneously.
 
-## �📝 Important Note for Deployed Services
+## � Important Note for Deployed Services
 
 When using the **deployed web app** (algoherbarium.vercel.app), the cloud services may enter a "cold start" state due to inactivity. To ensure full functionality:
 
@@ -83,6 +83,37 @@ EXPO_API_BASE_URL=http://localhost:5000/api
 # Or use ngrok if network issues occur
 # EXPO_API_BASE_URL=https://<ngrok-url>.ngrok.io/api
 ```
+
+#### 🌐 Ngrok Setup (for Mobile Development)
+
+If you're experiencing network connectivity issues with mobile, **ngrok** can create secure tunnels to your local services:
+
+**Installation on Linux Mint:**
+```bash
+# Install ngrok
+sudo apt update && sudo apt install ngrok
+
+# Or download directly
+wget https://bin.equinox.io/ngrok/ngrok-stable-linux-amd64.zip
+unzip ngrok-stable-linux-amd64.zip
+sudo mv ngrok /usr/local/bin
+```
+
+**Usage:**
+```bash
+# Create tunnel to your API server (port 5000)
+ngrok http 5000
+```
+
+**Update your mobile environment:**
+```env
+EXPO_API_BASE_URL=https://<ngrok-url>.ngrok.io/api
+```
+
+**Tips:**
+- Free ngrok accounts get random URLs each time
+- Paid plans give you reserved subdomains
+- Keep ngrok running in a separate terminal
 
 #### ML Services Environment
 
