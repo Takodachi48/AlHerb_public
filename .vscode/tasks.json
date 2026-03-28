@@ -31,17 +31,13 @@
     },
     {
       "label": "ML: Start Image Classifier",
-      "type": "process",
-      "command": "powershell.exe",
-      "args": [
-        "-NoProfile",
-        "-ExecutionPolicy",
-        "Bypass",
-        "-Command",
-        "$env:PYTHONPATH='src'; .\\.venv\\Scripts\\python.exe -m uvicorn app.main:app --host 0.0.0.0 --port 8000"
-      ],
+      "type": "shell",
+      "command": "${env:PYTHONPATH:-src} && ${command:python} -m uvicorn app.main:app --host 0.0.0.0 --port 8000",
       "options": {
-        "cwd": "${workspaceFolder}/ml-services/image-classifier"
+        "cwd": "${workspaceFolder}/ml-services/image-classifier",
+        "env": {
+          "PYTHONPATH": "src"
+        }
       },
       "presentation": {
         "panel": "new",
@@ -52,8 +48,7 @@
     {
       "label": "ML: Start Recommendation Engine",
       "type": "shell",
-      "command": ".\\.venv\\Scripts\\python.exe",
-      "args": ["src/main.py"],
+      "command": "${command:python} src/main.py",
       "options": {
         "cwd": "${workspaceFolder}/ml-services/recommendation-engine"
       },
@@ -131,15 +126,8 @@
     },
     {
       "label": "ML: Stop Image Classifier",
-      "type": "process",
-      "command": "powershell.exe",
-      "args": [
-        "-NoProfile",
-        "-ExecutionPolicy",
-        "Bypass",
-        "-Command",
-        "$pids = Get-NetTCPConnection -LocalPort 8000 -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique; if ($pids) { $pids | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }; Write-Output 'Stopped image-classifier process(es).' } else { Write-Output 'No image-classifier process found.' }"
-      ],
+      "type": "shell",
+      "command": "pkill -f 'uvicorn.*8000' || echo 'No image classifier process found'",
       "presentation": {
         "panel": "new",
         "reveal": "always"
@@ -148,15 +136,8 @@
     },
     {
       "label": "ML: Stop Recommendation Engine",
-      "type": "process",
-      "command": "powershell.exe",
-      "args": [
-        "-NoProfile",
-        "-ExecutionPolicy",
-        "Bypass",
-        "-Command",
-        "$pids = Get-NetTCPConnection -LocalPort 8001 -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique; if ($pids) { $pids | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }; Write-Output 'Stopped recommendation-engine process(es).' } else { Write-Output 'No recommendation-engine process found.' }"
-      ],
+      "type": "shell",
+      "command": "pkill -f 'python.*main.py.*8001' || echo 'No recommendation engine process found'",
       "presentation": {
         "panel": "new",
         "reveal": "always"
