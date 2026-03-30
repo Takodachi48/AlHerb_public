@@ -67,8 +67,8 @@
     {
       "label": "Mobile: Start",
       "type": "shell",
-      "command": "npm",
-      "args": ["run", "start", "--", "--go", "--tunnel"],
+      "command": "npx",
+      "args": ["expo", "start", "--go", "--tunnel"],
       "options": {
         "cwd": "${workspaceFolder}/mobile"
       },
