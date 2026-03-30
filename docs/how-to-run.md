@@ -67,6 +67,9 @@ cd ml-services/recommendation-engine
 # Terminal 5 - Start mobile client (optional)
 cd mobile
 npx expo start --go --tunnel
+
+# Alternative: If local Expo Go is not working, you can use the pre-built APK file
+# located in the desktop instead of running Expo Go
 ```
 
 ## Access the Application
@@ -238,11 +241,11 @@ VITE_APP_NAME=AlgoHerbarium
 
 #### Mobile Environment (`mobile/.env`)
 ```env
-EXPO_API_BASE_URL=http://localhost:5000/api
+EXPO_PUBLIC_API_BASE_URL=http://localhost:5000/api
 # For mobile development, you may need to update the API base URL to use your machine's IP address or configure ngrok if the connection is blocked:
-# EXPO_API_BASE_URL=http://<your-ip>:5000/api
+# EXPO_PUBLIC_API_BASE_URL=http://<your-ip>:5000/api
 # Or use ngrok if network issues occur
-# EXPO_API_BASE_URL=https://<ngrok-url>.ngrok.io/api
+# EXPO_PUBLIC_API_BASE_URL=https://<ngrok-url>.ngrok.io/api
 ```
 
 #### 🌐 Ngrok Setup (for Mobile Development)
