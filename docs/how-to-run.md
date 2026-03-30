@@ -67,6 +67,7 @@ cd ml-services/recommendation-engine
 # Terminal 5 - Start mobile client (optional)
 cd mobile
 npx expo start --tunnel
+# Note: If the mobile app starts in development build mode, press 's' to switch to Expo Go
 ```
 
 ## Access the Application

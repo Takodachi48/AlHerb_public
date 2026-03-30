@@ -65,6 +65,20 @@
       "problemMatcher": []
     },
     {
+      "label": "Mobile: Start",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "start", "--", "--go", "--tunnel"],
+      "options": {
+        "cwd": "${workspaceFolder}/mobile"
+      },
+      "presentation": {
+        "panel": "new",
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "Start Web & Server Only",
       "dependsOn": [
         "Web: Start",
@@ -78,6 +92,7 @@
       "dependsOn": [
         "Web: Start",
         "Server: Start",
+        "Mobile: Start",
         "ML: Start All"
       ],
       "dependsOrder": "parallel",
@@ -142,6 +157,23 @@
       "problemMatcher": []
     },
     {
+      "label": "Mobile: Stop",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "$pids = Get-NetTCPConnection -LocalPort 19006 -State Listen -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique; if ($pids) { $pids | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }; Write-Output 'Stopped mobile process(es).' } else { Write-Output 'No mobile process found.' }"
+      ],
+      "presentation": {
+        "panel": "new",
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "Stop Web & Server Only",
       "dependsOn": [
         "Web: Stop",
@@ -155,6 +187,7 @@
       "dependsOn": [
         "Web: Stop",
         "Server: Stop",
+        "Mobile: Stop",
         "ML: Stop Image Classifier",
         "ML: Stop Recommendation Engine"
       ],
